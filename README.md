@@ -15,8 +15,9 @@ Pode ser facilmente implementada em um projeto que necessita de uma API de auten
 1. Necessário que o `dotnet` e o `PostgreSQL` esteja devidamente instalado em sua máquina.
 2. Execute o comando `git clone https://github.com/leeo-sf/identity.git` no terminal.
 3. No arquivo `src/PlanWise.Identity/appsettings.json` insira a URL de conexão com o PostgreSQL em `ConnectionStrings__DefaultConnectionDb`.
-4. Execute o comando `Update-Database` para replicar o banco de dados em sua máquina.
-5. Execute o comando `dotnet run` para executar o projeto.
+4. Ainda no mesmo arquivo, em `EmailService__Credentials` insira as credenciais de email que enviarão as confirmações para o usuário.
+5. Execute o comando `Update-Database` para replicar o banco de dados em sua máquina.
+6. Execute o comando `dotnet run` para executar o projeto.
 
 ## Executar projeto com o docker
 *Em breve*
