@@ -1,0 +1,17 @@
+C:\Users\leona\projects\PlanWise\src\PlanWise.Application\bin\Debug\net8.0\PlanWise.Application.deps.json
+C:\Users\leona\projects\PlanWise\src\PlanWise.Application\bin\Debug\net8.0\PlanWise.Application.dll
+C:\Users\leona\projects\PlanWise\src\PlanWise.Application\bin\Debug\net8.0\PlanWise.Application.pdb
+C:\Users\leona\projects\PlanWise\src\PlanWise.Application\bin\Debug\net8.0\PlanWise.Domain.dll
+C:\Users\leona\projects\PlanWise\src\PlanWise.Application\bin\Debug\net8.0\PlanWise.Domain.pdb
+C:\Users\leona\projects\PlanWise\src\PlanWise.Application\obj\Debug\net8.0\PlanWise.Application.csproj.AssemblyReference.cache
+C:\Users\leona\projects\PlanWise\src\PlanWise.Application\obj\Debug\net8.0\PlanWise.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\leona\projects\PlanWise\src\PlanWise.Application\obj\Debug\net8.0\PlanWise.Application.AssemblyInfoInputs.cache
+C:\Users\leona\projects\PlanWise\src\PlanWise.Application\obj\Debug\net8.0\PlanWise.Application.AssemblyInfo.cs
+C:\Users\leona\projects\PlanWise\src\PlanWise.Application\obj\Debug\net8.0\PlanWise.Application.csproj.CoreCompileInputs.cache
+C:\Users\leona\projects\PlanWise\src\PlanWise.Application\obj\Debug\net8.0\PlanWise.0C8ACFC3.Up2Date
+C:\Users\leona\projects\PlanWise\src\PlanWise.Application\obj\Debug\net8.0\PlanWise.Application.dll
+C:\Users\leona\projects\PlanWise\src\PlanWise.Application\obj\Debug\net8.0\refint\PlanWise.Application.dll
+C:\Users\leona\projects\PlanWise\src\PlanWise.Application\obj\Debug\net8.0\PlanWise.Application.pdb
+C:\Users\leona\projects\PlanWise\src\PlanWise.Application\obj\Debug\net8.0\ref\PlanWise.Application.dll
+C:\Users\leona\projects\PlanWise\src\PlanWise.Application\bin\Debug\net8.0\EmailServices.dll
+C:\Users\leona\projects\PlanWise\src\PlanWise.Application\bin\Debug\net8.0\EmailServices.pdb

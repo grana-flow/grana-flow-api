@@ -1,0 +1,11 @@
+C:\Users\leona\projects\PlanWise\src\Service\EmailService\bin\Debug\net8.0\EmailServices.deps.json
+C:\Users\leona\projects\PlanWise\src\Service\EmailService\bin\Debug\net8.0\EmailServices.dll
+C:\Users\leona\projects\PlanWise\src\Service\EmailService\bin\Debug\net8.0\EmailServices.pdb
+C:\Users\leona\projects\PlanWise\src\Service\EmailService\obj\Debug\net8.0\EmailServices.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\leona\projects\PlanWise\src\Service\EmailService\obj\Debug\net8.0\EmailServices.AssemblyInfoInputs.cache
+C:\Users\leona\projects\PlanWise\src\Service\EmailService\obj\Debug\net8.0\EmailServices.AssemblyInfo.cs
+C:\Users\leona\projects\PlanWise\src\Service\EmailService\obj\Debug\net8.0\EmailServices.csproj.CoreCompileInputs.cache
+C:\Users\leona\projects\PlanWise\src\Service\EmailService\obj\Debug\net8.0\EmailServices.dll
+C:\Users\leona\projects\PlanWise\src\Service\EmailService\obj\Debug\net8.0\refint\EmailServices.dll
+C:\Users\leona\projects\PlanWise\src\Service\EmailService\obj\Debug\net8.0\EmailServices.pdb
+C:\Users\leona\projects\PlanWise\src\Service\EmailService\obj\Debug\net8.0\ref\EmailServices.dll

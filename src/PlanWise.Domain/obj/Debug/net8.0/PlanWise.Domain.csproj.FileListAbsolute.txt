@@ -1,0 +1,12 @@
+C:\Users\leona\projects\PlanWise\src\PlanWise.Domain\bin\Debug\net8.0\PlanWise.Domain.deps.json
+C:\Users\leona\projects\PlanWise\src\PlanWise.Domain\bin\Debug\net8.0\PlanWise.Domain.dll
+C:\Users\leona\projects\PlanWise\src\PlanWise.Domain\bin\Debug\net8.0\PlanWise.Domain.pdb
+C:\Users\leona\projects\PlanWise\src\PlanWise.Domain\obj\Debug\net8.0\PlanWise.Domain.csproj.AssemblyReference.cache
+C:\Users\leona\projects\PlanWise\src\PlanWise.Domain\obj\Debug\net8.0\PlanWise.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\leona\projects\PlanWise\src\PlanWise.Domain\obj\Debug\net8.0\PlanWise.Domain.AssemblyInfoInputs.cache
+C:\Users\leona\projects\PlanWise\src\PlanWise.Domain\obj\Debug\net8.0\PlanWise.Domain.AssemblyInfo.cs
+C:\Users\leona\projects\PlanWise\src\PlanWise.Domain\obj\Debug\net8.0\PlanWise.Domain.csproj.CoreCompileInputs.cache
+C:\Users\leona\projects\PlanWise\src\PlanWise.Domain\obj\Debug\net8.0\PlanWise.Domain.dll
+C:\Users\leona\projects\PlanWise\src\PlanWise.Domain\obj\Debug\net8.0\refint\PlanWise.Domain.dll
+C:\Users\leona\projects\PlanWise\src\PlanWise.Domain\obj\Debug\net8.0\PlanWise.Domain.pdb
+C:\Users\leona\projects\PlanWise\src\PlanWise.Domain\obj\Debug\net8.0\ref\PlanWise.Domain.dll
