@@ -21,3 +21,4 @@ C:\Users\leona\projects\PlanWise\src\PlanWise.Infra.Ioc\obj\Debug\net8.0\PlanWis
 C:\Users\leona\projects\PlanWise\src\PlanWise.Infra.Ioc\obj\Debug\net8.0\ref\PlanWise.Infra.Ioc.dll
 C:\Users\leona\projects\PlanWise\src\PlanWise.Infra.Ioc\bin\Debug\net8.0\EmailServices.dll
 C:\Users\leona\projects\PlanWise\src\PlanWise.Infra.Ioc\bin\Debug\net8.0\EmailServices.pdb
+C:\Users\leona\projects\PlanWise\src\PlanWise.Infra.Ioc\obj\Debug\net8.0\PlanWise.Infra.Ioc.sourcelink.json

@@ -13,3 +13,4 @@ C:\Users\leona\projects\PlanWise\src\PlanWise.Infra.Data\obj\Debug\net8.0\PlanWi
 C:\Users\leona\projects\PlanWise\src\PlanWise.Infra.Data\obj\Debug\net8.0\refint\PlanWise.Infra.Data.dll
 C:\Users\leona\projects\PlanWise\src\PlanWise.Infra.Data\obj\Debug\net8.0\PlanWise.Infra.Data.pdb
 C:\Users\leona\projects\PlanWise\src\PlanWise.Infra.Data\obj\Debug\net8.0\ref\PlanWise.Infra.Data.dll
+C:\Users\leona\projects\PlanWise\src\PlanWise.Infra.Data\obj\Debug\net8.0\PlanWise.Infra.Data.sourcelink.json

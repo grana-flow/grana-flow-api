@@ -10,3 +10,4 @@ C:\Users\leona\projects\PlanWise\src\PlanWise.Domain\obj\Debug\net8.0\PlanWise.D
 C:\Users\leona\projects\PlanWise\src\PlanWise.Domain\obj\Debug\net8.0\refint\PlanWise.Domain.dll
 C:\Users\leona\projects\PlanWise\src\PlanWise.Domain\obj\Debug\net8.0\PlanWise.Domain.pdb
 C:\Users\leona\projects\PlanWise\src\PlanWise.Domain\obj\Debug\net8.0\ref\PlanWise.Domain.dll
+C:\Users\leona\projects\PlanWise\src\PlanWise.Domain\obj\Debug\net8.0\PlanWise.Domain.sourcelink.json
