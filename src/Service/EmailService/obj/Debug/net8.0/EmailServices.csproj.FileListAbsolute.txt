@@ -9,3 +9,4 @@ C:\Users\leona\projects\PlanWise\src\Service\EmailService\obj\Debug\net8.0\Email
 C:\Users\leona\projects\PlanWise\src\Service\EmailService\obj\Debug\net8.0\refint\EmailServices.dll
 C:\Users\leona\projects\PlanWise\src\Service\EmailService\obj\Debug\net8.0\EmailServices.pdb
 C:\Users\leona\projects\PlanWise\src\Service\EmailService\obj\Debug\net8.0\ref\EmailServices.dll
+C:\Users\leona\projects\PlanWise\src\Service\EmailService\obj\Debug\net8.0\EmailServices.sourcelink.json

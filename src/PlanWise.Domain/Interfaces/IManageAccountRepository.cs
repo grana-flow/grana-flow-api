@@ -6,7 +6,7 @@ namespace PlanWise.Domain.Interfaces;
 public interface IManageAccountRepository
 {
     Task<IdentityResult> CreateAccount(User user, string password);
-    Task<User> FindByEmail(string email);
+    Task<User?> FindByEmail(string email);
     Task<bool> IsEmailConfirmed(User user);
     Task<bool> CheckPassword(User user, string password);
     Task<string> GenerateEmailConfirmationToken(User user);

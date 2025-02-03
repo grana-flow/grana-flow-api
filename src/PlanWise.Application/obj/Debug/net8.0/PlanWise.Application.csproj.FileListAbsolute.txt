@@ -15,3 +15,4 @@ C:\Users\leona\projects\PlanWise\src\PlanWise.Application\obj\Debug\net8.0\PlanW
 C:\Users\leona\projects\PlanWise\src\PlanWise.Application\obj\Debug\net8.0\ref\PlanWise.Application.dll
 C:\Users\leona\projects\PlanWise\src\PlanWise.Application\bin\Debug\net8.0\EmailServices.dll
 C:\Users\leona\projects\PlanWise\src\PlanWise.Application\bin\Debug\net8.0\EmailServices.pdb
+C:\Users\leona\projects\PlanWise\src\PlanWise.Application\obj\Debug\net8.0\PlanWise.Application.sourcelink.json
