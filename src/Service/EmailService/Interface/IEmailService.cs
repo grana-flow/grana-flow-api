@@ -4,5 +4,5 @@ namespace EmailServices.Interface;
 
 public interface IEmailService
 {
-    Task SendEmail(EmailSendingDetails emailSendingDetails);
+    Task SendEmail(string username, string password, EmailSendingDetails emailSendingDetails);
 }

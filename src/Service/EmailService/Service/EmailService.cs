@@ -13,16 +13,17 @@ public class EmailService : IEmailService
     private readonly Boolean _enableSsl = true;
     private readonly Boolean _defaultCredentials = false;
 
-    public async Task SendEmail(EmailSendingDetails emailSendingDetails)
+    public async Task SendEmail(
+        string username,
+        string password,
+        EmailSendingDetails emailSendingDetails
+    )
     {
         try
         {
             using (MailMessage emailMessage = new MailMessage())
             {
-                emailMessage.From = new MailAddress(
-                    emailSendingDetails.Username,
-                    emailSendingDetails.DisplayName
-                );
+                emailMessage.From = new MailAddress(username, emailSendingDetails.DisplayName);
                 emailMessage.Body = emailSendingDetails.Body;
                 emailMessage.Subject = emailSendingDetails.Subject;
                 emailMessage.IsBodyHtml = emailSendingDetails.IsBodyHtml;
@@ -37,10 +38,7 @@ public class EmailService : IEmailService
                     smtpClient.EnableSsl = _enableSsl;
                     smtpClient.Timeout = _timeout;
                     smtpClient.UseDefaultCredentials = _defaultCredentials;
-                    smtpClient.Credentials = new NetworkCredential(
-                        emailSendingDetails.Username,
-                        emailSendingDetails.PasswordApp
-                    );
+                    smtpClient.Credentials = new NetworkCredential(username, password);
 
                     await smtpClient.SendMailAsync(emailMessage);
                 }

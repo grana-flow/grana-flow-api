@@ -17,7 +17,6 @@ public class EndPointsTests
     private const string _newPassword = "newPassword";
     private const string _forgetPasswordToken = "forget-password_token";
 
-
     public EndPointsTests()
     {
         _mockRepo = new Mock<IManageAccountRepository>();
@@ -28,7 +27,13 @@ public class EndPointsTests
     [Fact]
     public async Task Register_User_Successfully()
     {
-        var userVO = new UserVO { Username = "leoo", Email = "email_test@gmail.com", Password = "password", ConfirmPassword = "password" };
+        var userVO = new UserVO
+        {
+            Username = "leoo",
+            Email = "email_test@gmail.com",
+            Password = "password",
+            ConfirmPassword = "password"
+        };
         var user = _mapper.Map<User>(userVO);
 
         _mockRepo
@@ -43,16 +48,20 @@ public class EndPointsTests
     [Fact]
     public async Task Search_User_By_Existing_Email()
     {
-        var userVO = new UserVO { Username = "leoo", Email = "email_test@gmail.com", Password = "password", ConfirmPassword = "password" };
+        var userVO = new UserVO
+        {
+            Username = "leoo",
+            Email = "email_test@gmail.com",
+            Password = "password",
+            ConfirmPassword = "password"
+        };
         var user = _mapper.Map<User>(userVO);
 
         _mockRepo
             .Setup(repo => repo.CreateAccount(user, userVO.Password))
             .ReturnsAsync(IdentityResult.Success);
 
-        _mockRepo
-            .Setup(repo => repo.FindByEmail(user.Email))
-            .ReturnsAsync(user);
+        _mockRepo.Setup(repo => repo.FindByEmail(user.Email)).ReturnsAsync(user);
 
         var resultCreated = await _mockRepo.Object.CreateAccount(user, userVO.Password);
         var resultUser = await _mockRepo.Object.FindByEmail(userVO.Email);
@@ -66,16 +75,20 @@ public class EndPointsTests
     [Fact]
     public async Task Search_User_By_Non_Existent_Email()
     {
-        var userVO = new UserVO { Username = "leoo", Email = "email_test@gmail.com", Password = "password", ConfirmPassword = "password" };
+        var userVO = new UserVO
+        {
+            Username = "leoo",
+            Email = "email_test@gmail.com",
+            Password = "password",
+            ConfirmPassword = "password"
+        };
         var user = _mapper.Map<User>(userVO);
 
         _mockRepo
             .Setup(repo => repo.CreateAccount(user, userVO.Password))
             .ReturnsAsync(IdentityResult.Success);
 
-        _mockRepo
-            .Setup(repo => repo.FindByEmail(_nonExistentEmail))
-            .ReturnsAsync((User?)null);
+        _mockRepo.Setup(repo => repo.FindByEmail(_nonExistentEmail)).ReturnsAsync((User?)null);
 
         var resultCreated = await _mockRepo.Object.CreateAccount(user, userVO.Password);
         var resultUser = await _mockRepo.Object.FindByEmail(_nonExistentEmail);
@@ -87,16 +100,20 @@ public class EndPointsTests
     [Fact]
     public async Task Validates_User_With_Correct_Password()
     {
-        var userVO = new UserVO { Username = "leoo", Email = "email_test@gmail.com", Password = "password", ConfirmPassword = "password" };
+        var userVO = new UserVO
+        {
+            Username = "leoo",
+            Email = "email_test@gmail.com",
+            Password = "password",
+            ConfirmPassword = "password"
+        };
         var user = _mapper.Map<User>(userVO);
 
         _mockRepo
             .Setup(repo => repo.CreateAccount(user, userVO.Password))
             .ReturnsAsync(IdentityResult.Success);
 
-        _mockRepo
-            .Setup(repo => repo.CheckPassword(user, userVO.Password))
-            .ReturnsAsync(true);
+        _mockRepo.Setup(repo => repo.CheckPassword(user, userVO.Password)).ReturnsAsync(true);
 
         var resultCreated = await _mockRepo.Object.CreateAccount(user, userVO.Password);
         var resultCheckPassword = await _mockRepo.Object.CheckPassword(user, userVO.Password);
@@ -108,16 +125,20 @@ public class EndPointsTests
     [Fact]
     public async Task Validates_User_With_Incorrect_Password()
     {
-        var userVO = new UserVO { Username = "leoo", Email = "email_test@gmail.com", Password = "password", ConfirmPassword = "password" };
+        var userVO = new UserVO
+        {
+            Username = "leoo",
+            Email = "email_test@gmail.com",
+            Password = "password",
+            ConfirmPassword = "password"
+        };
         var user = _mapper.Map<User>(userVO);
 
         _mockRepo
             .Setup(repo => repo.CreateAccount(user, userVO.Password))
             .ReturnsAsync(IdentityResult.Success);
 
-        _mockRepo
-            .Setup(repo => repo.CheckPassword(user, userVO.Password))
-            .ReturnsAsync(false);
+        _mockRepo.Setup(repo => repo.CheckPassword(user, userVO.Password)).ReturnsAsync(false);
 
         var resultCreated = await _mockRepo.Object.CreateAccount(user, userVO.Password);
         var resultCheckPassword = await _mockRepo.Object.CheckPassword(user, _passwordIncorrect);
@@ -129,7 +150,13 @@ public class EndPointsTests
     [Fact]
     public async Task Validate_Password_Change_Successfully()
     {
-        var userVO = new UserVO { Username = "leoo", Email = "email_test@gmail.com", Password = "password", ConfirmPassword = "password" };
+        var userVO = new UserVO
+        {
+            Username = "leoo",
+            Email = "email_test@gmail.com",
+            Password = "password",
+            ConfirmPassword = "password"
+        };
         var user = _mapper.Map<User>(userVO);
 
         _mockRepo
@@ -144,13 +171,15 @@ public class EndPointsTests
             .Setup(repo => repo.ValidateResetPassword(user, _forgetPasswordToken, _newPassword))
             .ReturnsAsync(IdentityResult.Success);
 
-        _mockRepo
-            .Setup(repo => repo.CheckPassword(user, _newPassword))
-            .ReturnsAsync(true);
+        _mockRepo.Setup(repo => repo.CheckPassword(user, _newPassword)).ReturnsAsync(true);
 
         var resultCreated = await _mockRepo.Object.CreateAccount(user, userVO.Password);
         var resultForgetPasswordToken = await _mockRepo.Object.GenerateForgetPasswordToken(user);
-        var resultValidateResetPassword = await _mockRepo.Object.ValidateResetPassword(user, resultForgetPasswordToken, _newPassword);
+        var resultValidateResetPassword = await _mockRepo.Object.ValidateResetPassword(
+            user,
+            resultForgetPasswordToken,
+            _newPassword
+        );
         var resultCheckPassword = await _mockRepo.Object.CheckPassword(user, _newPassword);
 
         Assert.True(resultCreated.Succeeded);
@@ -162,7 +191,13 @@ public class EndPointsTests
     [Fact]
     public async Task Check_Password_After_Forgetting_It_With_Incorrect_New_Password()
     {
-        var userVO = new UserVO { Username = "leoo", Email = "email_test@gmail.com", Password = "password", ConfirmPassword = "password" };
+        var userVO = new UserVO
+        {
+            Username = "leoo",
+            Email = "email_test@gmail.com",
+            Password = "password",
+            ConfirmPassword = "password"
+        };
         var user = _mapper.Map<User>(userVO);
 
         _mockRepo
@@ -177,13 +212,15 @@ public class EndPointsTests
             .Setup(repo => repo.ValidateResetPassword(user, _forgetPasswordToken, _newPassword))
             .ReturnsAsync(IdentityResult.Success);
 
-        _mockRepo
-            .Setup(repo => repo.CheckPassword(user, "any password"))
-            .ReturnsAsync(false);
+        _mockRepo.Setup(repo => repo.CheckPassword(user, "any password")).ReturnsAsync(false);
 
         var resultCreated = await _mockRepo.Object.CreateAccount(user, userVO.Password);
         var resultForgetPasswordToken = await _mockRepo.Object.GenerateForgetPasswordToken(user);
-        var resultValidateResetPassword = await _mockRepo.Object.ValidateResetPassword(user, resultForgetPasswordToken, _newPassword);
+        var resultValidateResetPassword = await _mockRepo.Object.ValidateResetPassword(
+            user,
+            resultForgetPasswordToken,
+            _newPassword
+        );
         var resultCheckPassword = await _mockRepo.Object.CheckPassword(user, "any password");
 
         Assert.True(resultCreated.Succeeded);

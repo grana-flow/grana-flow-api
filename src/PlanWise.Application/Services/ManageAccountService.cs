@@ -2,34 +2,38 @@
 using System.Text.Json;
 using AutoMapper;
 using EmailServices.Contracts;
-using EmailServices.Interface;
 using EmailServices.Utils;
 using Microsoft.Extensions.Configuration;
 using PlanWise.Application.DTOs;
 using PlanWise.Application.Interfaces;
 using PlanWise.Domain.Entities;
 using PlanWise.Domain.Interfaces;
+using RabbitMQServer.contracts;
+using RabbitMQServer.interfaces;
 
 namespace PlanWise.Application.Services;
 
 public class ManageAccountService : IManageAccountService
 {
     private readonly IManageAccountRepository _repository;
-    private readonly IEmailService _emailService;
     private readonly IMapper _mapper;
     private readonly IConfiguration _config;
+    private readonly IRabbitMQMessageSender _rabbitMQServer;
+    private readonly IConfiguration _configuration;
 
     public ManageAccountService(
         IManageAccountRepository repository,
-        IEmailService emailService,
         IMapper mapper,
-        IConfiguration config
+        IConfiguration config,
+        IRabbitMQMessageSender rabbitMqServer,
+        IConfiguration configuration
     )
     {
         _repository = repository;
-        _emailService = emailService;
         _mapper = mapper;
         _config = config;
+        _rabbitMQServer = rabbitMqServer;
+        _configuration = configuration;
     }
 
     public async Task<HttpResponseMessage> CreateAccount(
@@ -44,20 +48,30 @@ public class ManageAccountService : IManageAccountService
         if (result.Succeeded)
         {
             var token = await _repository.GenerateEmailConfirmationToken(user);
+            var jsonReader = new JsonReader();
+            var body = jsonReader.GetValue("Template", "EmailConfirmation");
 
-            _ = Task.Run(() =>
-            {
-                var jsonReader = new JsonReader();
-                var body = jsonReader.GetValue("Template", "EmailConfirmation");
-                _ = SendEmail(
-                    "Confirm email",
-                    body.Replace(
-                        "linkToVerifyEmail",
-                        $"{endpointPathToConfirmEmail}?token={token}&email={user.Email}"
-                    ),
-                    new List<string> { user.Email }
-                );
-            });
+            _rabbitMQServer.SendMessage(
+                new DataServerRabbitMQ<EmailSendingDetails>(
+                    hostName: _configuration.GetSection("RabbitMQServer:HostName").Value ?? "",
+                    password: _configuration.GetSection("RabbitMQServer:Password").Value ?? "",
+                    userName: _configuration.GetSection("RabbitMQServer:Username").Value ?? "",
+                    virtualHost: _configuration.GetSection("RabbitMQServer:VirtualHost").Value
+                        ?? "",
+                    queueName: "confirmEmail-queue",
+                    baseMessage: new EmailSendingDetails(
+                        displayName: "PlanWise",
+                        body.Replace(
+                            "linkToVerifyEmail",
+                            $"{endpointPathToConfirmEmail}?token={token}&email={user.Email}"
+                        ),
+                        subject: "Confirm email",
+                        isBodyHtml: true,
+                        mailPriority: System.Net.Mail.MailPriority.High,
+                        mailAddressesTo: new List<string> { user.Email! }
+                    )
+                )
+            );
 
             return new HttpResponseMessage
             {
@@ -91,7 +105,7 @@ public class ManageAccountService : IManageAccountService
     {
         var user = await _repository.FindByEmail(model.Email);
 
-        if (!user.EmailConfirmed)
+        if (!user!.EmailConfirmed)
             return new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.Unauthorized,
@@ -118,16 +132,27 @@ public class ManageAccountService : IManageAccountService
         if (user.TwoFactorEnabled)
         {
             var token = await _repository.GenerateTwoFactorToken(user, "Email");
-            _ = Task.Run(() =>
-            {
-                var jsonReader = new JsonReader();
-                var body = jsonReader.GetValue("Template", "TwoFactorToken");
-                _ = SendEmail(
-                    "Verification code",
-                    body.Replace("#token", token),
-                    new List<string> { user.Email }
-                );
-            });
+            var jsonReader = new JsonReader();
+            var body = jsonReader.GetValue("Template", "TwoFactorToken");
+
+            _rabbitMQServer.SendMessage(
+                new DataServerRabbitMQ<EmailSendingDetails>(
+                    hostName: _configuration.GetSection("RabbitMQServer:HostName").Value ?? "",
+                    password: _configuration.GetSection("RabbitMQServer:Password").Value ?? "",
+                    userName: _configuration.GetSection("RabbitMQServer:Username").Value ?? "",
+                    virtualHost: _configuration.GetSection("RabbitMQServer:VirtualHost").Value
+                        ?? "",
+                    queueName: "2FA-queue",
+                    baseMessage: new EmailSendingDetails(
+                        displayName: "PlanWise",
+                        body.Replace("#token", token),
+                        subject: "Verification code",
+                        isBodyHtml: true,
+                        mailPriority: System.Net.Mail.MailPriority.High,
+                        mailAddressesTo: new List<string> { user.Email! }
+                    )
+                )
+            );
 
             return new HttpResponseMessage
             {
@@ -202,14 +227,26 @@ public class ManageAccountService : IManageAccountService
     public async Task<HttpResponseMessage> GenerateTwoFactorToken(string email)
     {
         var user = await _repository.FindByEmail(email);
-        var token = await _repository.GenerateTwoFactorToken(user, "Email");
+        var token = await _repository.GenerateTwoFactorToken(user!, "Email");
 
         var jsonReader = new JsonReader();
         var body = jsonReader.GetValue("Template", "TwoFactorToken");
-        await SendEmail(
-            "Verification code",
-            body.Replace("#token", token),
-            new List<string> { user.Email }
+        _rabbitMQServer.SendMessage(
+            new DataServerRabbitMQ<EmailSendingDetails>(
+                hostName: _configuration.GetSection("RabbitMQServer:HostName").Value ?? "",
+                password: _configuration.GetSection("RabbitMQServer:Password").Value ?? "",
+                userName: _configuration.GetSection("RabbitMQServer:Username").Value ?? "",
+                virtualHost: _configuration.GetSection("RabbitMQServer:VirtualHost").Value ?? "",
+                queueName: "2FA-queue",
+                baseMessage: new EmailSendingDetails(
+                    displayName: "PlanWise",
+                    body.Replace("#token", token),
+                    subject: "Verification code",
+                    isBodyHtml: true,
+                    mailPriority: System.Net.Mail.MailPriority.High,
+                    mailAddressesTo: new List<string> { user!.Email! }
+                )
+            )
         );
 
         return new HttpResponseMessage
@@ -227,7 +264,7 @@ public class ManageAccountService : IManageAccountService
     {
         var user = await _repository.FindByEmail(vo.Email);
 
-        var isValid = await _repository.VerifyTwoFactorToken(user, "Email", vo.Token);
+        var isValid = await _repository.VerifyTwoFactorToken(user!, "Email", vo.Token);
         if (!isValid)
             return new HttpResponseMessage
             {
@@ -240,7 +277,7 @@ public class ManageAccountService : IManageAccountService
             };
 
         // TODO: gerar token JWT
-        if (!user.TwoFactorEnabled)
+        if (!user!.TwoFactorEnabled)
             await _repository.EnableTwoFactor(user, true);
 
         return new HttpResponseMessage
@@ -254,21 +291,34 @@ public class ManageAccountService : IManageAccountService
         };
     }
 
-    public async Task<HttpResponseMessage> RequestForgetPassword(string email, string endpointPathToVerifyReset)
+    public async Task<HttpResponseMessage> RequestForgetPassword(
+        string email,
+        string endpointPathToVerifyReset
+    )
     {
         var user = await _repository.FindByEmail(email);
-        var token = await _repository.GenerateForgetPasswordToken(user);
+        var token = await _repository.GenerateForgetPasswordToken(user!);
 
-        _ = Task.Run(() =>
-        {
-            var jsonReader = new JsonReader();
-            var body = jsonReader.GetValue("Template", "ForgetPassword");
-            _ = SendEmail(
-                "Request password change",
-                body.Replace("#token", $"{endpointPathToVerifyReset}?token={token}"),
-                new List<string> { user.Email }
-            );
-        });
+        var jsonReader = new JsonReader();
+        var body = jsonReader.GetValue("Template", "ForgetPassword");
+
+        _rabbitMQServer.SendMessage(
+            new DataServerRabbitMQ<EmailSendingDetails>(
+                hostName: _configuration.GetSection("RabbitMQServer:HostName").Value ?? "",
+                password: _configuration.GetSection("RabbitMQServer:Password").Value ?? "",
+                userName: _configuration.GetSection("RabbitMQServer:Username").Value ?? "",
+                virtualHost: _configuration.GetSection("RabbitMQServer:VirtualHost").Value ?? "",
+                queueName: "forgetPassword-queue",
+                baseMessage: new EmailSendingDetails(
+                    displayName: "PlanWise",
+                    body.Replace("#token", $"{endpointPathToVerifyReset}?token={token}"),
+                    subject: "Request password change",
+                    isBodyHtml: true,
+                    mailPriority: System.Net.Mail.MailPriority.High,
+                    mailAddressesTo: new List<string> { user!.Email! }
+                )
+            )
+        );
 
         return new HttpResponseMessage
         {
@@ -286,9 +336,10 @@ public class ManageAccountService : IManageAccountService
     public async Task<HttpResponseMessage> ValidateForgetPassword(ResetPasswordVO vo, string token)
     {
         var user = await _repository.FindByEmail(vo.Email);
+        var decodedToken = WebUtility.UrlDecode(token);
         var resetPasswordResult = await _repository.ValidateResetPassword(
-            user,
-            token,
+            user!,
+            decodedToken,
             vo.Password
         );
 
@@ -314,29 +365,5 @@ public class ManageAccountService : IManageAccountService
                 "application/json"
             )
         };
-    }
-
-    private async Task SendEmail(string subject, string body, List<string> mailAddressesTo)
-    {
-        await _emailService.SendEmail(
-            new EmailSendingDetails(
-                username: _config
-                    .GetSection("EmailService")
-                    .GetSection("Credentials")
-                    .GetSection("Username")
-                    .Value ?? throw new ApplicationException("Not seted username."),
-                passwordApp: _config
-                    .GetSection("EmailService")
-                    .GetSection("Credentials")
-                    .GetSection("PasswordApp")
-                    .Value ?? throw new ApplicationException("Not seted password app."),
-                displayName: "PlanWise",
-                body: body,
-                subject: subject,
-                isBodyHtml: true,
-                mailPriority: System.Net.Mail.MailPriority.High,
-                mailAddressesTo: mailAddressesTo
-            )
-        );
     }
 }
