@@ -22,3 +22,5 @@ C:\Users\leona\projects\PlanWise\src\PlanWise.Infra.Ioc\obj\Debug\net8.0\ref\Pla
 C:\Users\leona\projects\PlanWise\src\PlanWise.Infra.Ioc\bin\Debug\net8.0\EmailServices.dll
 C:\Users\leona\projects\PlanWise\src\PlanWise.Infra.Ioc\bin\Debug\net8.0\EmailServices.pdb
 C:\Users\leona\projects\PlanWise\src\PlanWise.Infra.Ioc\obj\Debug\net8.0\PlanWise.Infra.Ioc.sourcelink.json
+C:\Users\leona\projects\PlanWise\src\PlanWise.Infra.Ioc\bin\Debug\net8.0\RabbitMQServer.dll
+C:\Users\leona\projects\PlanWise\src\PlanWise.Infra.Ioc\bin\Debug\net8.0\RabbitMQServer.pdb

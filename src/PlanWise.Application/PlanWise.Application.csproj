@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PlanWise.Domain\PlanWise.Domain.csproj" />
-    <ProjectReference Include="..\Service\EmailService\EmailServices.csproj" />
+    <ProjectReference Include="..\RabbitMQServer\RabbitMQServer.csproj" />
   </ItemGroup>
 
 </Project>

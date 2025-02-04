@@ -1,0 +1,16 @@
+C:\Users\leona\projects\PlanWise\src\RabbitMQServer\bin\Debug\net8.0\RabbitMQServer.deps.json
+C:\Users\leona\projects\PlanWise\src\RabbitMQServer\bin\Debug\net8.0\RabbitMQServer.dll
+C:\Users\leona\projects\PlanWise\src\RabbitMQServer\bin\Debug\net8.0\RabbitMQServer.pdb
+C:\Users\leona\projects\PlanWise\src\RabbitMQServer\obj\Debug\net8.0\RabbitMQServer.csproj.AssemblyReference.cache
+C:\Users\leona\projects\PlanWise\src\RabbitMQServer\obj\Debug\net8.0\RabbitMQServer.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\leona\projects\PlanWise\src\RabbitMQServer\obj\Debug\net8.0\RabbitMQServer.AssemblyInfoInputs.cache
+C:\Users\leona\projects\PlanWise\src\RabbitMQServer\obj\Debug\net8.0\RabbitMQServer.AssemblyInfo.cs
+C:\Users\leona\projects\PlanWise\src\RabbitMQServer\obj\Debug\net8.0\RabbitMQServer.csproj.CoreCompileInputs.cache
+C:\Users\leona\projects\PlanWise\src\RabbitMQServer\obj\Debug\net8.0\RabbitMQServer.sourcelink.json
+C:\Users\leona\projects\PlanWise\src\RabbitMQServer\obj\Debug\net8.0\RabbitMQServer.dll
+C:\Users\leona\projects\PlanWise\src\RabbitMQServer\obj\Debug\net8.0\refint\RabbitMQServer.dll
+C:\Users\leona\projects\PlanWise\src\RabbitMQServer\obj\Debug\net8.0\RabbitMQServer.pdb
+C:\Users\leona\projects\PlanWise\src\RabbitMQServer\obj\Debug\net8.0\ref\RabbitMQServer.dll
+C:\Users\leona\projects\PlanWise\src\RabbitMQServer\bin\Debug\net8.0\EmailServices.dll
+C:\Users\leona\projects\PlanWise\src\RabbitMQServer\bin\Debug\net8.0\EmailServices.pdb
+C:\Users\leona\projects\PlanWise\src\RabbitMQServer\obj\Debug\net8.0\RabbitMQ.829FA62B.Up2Date

@@ -19,7 +19,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{5EC3
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailServices", "Service\EmailService\EmailServices.csproj", "{9D04CEC0-E683-4E7E-BAA3-1A1E71FBAD30}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "tests\tests.csproj", "{71CEF88C-6330-47B6-934E-D4D9E88F198A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tests", "tests\tests.csproj", "{71CEF88C-6330-47B6-934E-D4D9E88F198A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQServer", "RabbitMQServer\RabbitMQServer.csproj", "{04FF3298-B2D7-475A-BBA9-BD5249576ADB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,10 @@ Global
 		{71CEF88C-6330-47B6-934E-D4D9E88F198A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71CEF88C-6330-47B6-934E-D4D9E88F198A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71CEF88C-6330-47B6-934E-D4D9E88F198A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04FF3298-B2D7-475A-BBA9-BD5249576ADB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04FF3298-B2D7-475A-BBA9-BD5249576ADB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04FF3298-B2D7-475A-BBA9-BD5249576ADB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04FF3298-B2D7-475A-BBA9-BD5249576ADB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -65,6 +71,7 @@ Global
 		{AAFDA276-BBE7-4C54-9118-838DF1F3D027} = {13D69981-E785-44D6-9637-FD8BCE174ECD}
 		{0AEC1DBF-0208-48EC-83F0-F67ACAAF1148} = {13D69981-E785-44D6-9637-FD8BCE174ECD}
 		{9D04CEC0-E683-4E7E-BAA3-1A1E71FBAD30} = {5EC33F62-6BF7-4ED6-B061-AF0E9898EB99}
+		{04FF3298-B2D7-475A-BBA9-BD5249576ADB} = {5EC33F62-6BF7-4ED6-B061-AF0E9898EB99}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {08990686-C1A9-4780-AB5E-337039F03E12}

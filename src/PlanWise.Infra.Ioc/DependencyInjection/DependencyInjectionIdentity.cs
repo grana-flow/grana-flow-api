@@ -12,6 +12,8 @@ using PlanWise.Domain.Interfaces;
 using PlanWise.Infra.Data.Context;
 using PlanWise.Infra.Data.Repository;
 using PlanWise.Infra.Ioc.DependencyInjection.Base;
+using RabbitMQServer.interfaces;
+using RabbitMQServer.services;
 
 namespace PlanWise.Infra.Ioc.DependencyInjection
 {
@@ -51,6 +53,7 @@ namespace PlanWise.Infra.Ioc.DependencyInjection
             _serviceCollection!.AddScoped<IManageAccountService, ManageAccountService>();
             _serviceCollection!.AddScoped<IManageAccountRepository, ManageAccountRepository>();
             _serviceCollection!.AddScoped<IEmailService, EmailService>();
+            _serviceCollection!.AddSingleton<IRabbitMQMessageSender, RabbitMQMessageSender>();
         }
     }
 }

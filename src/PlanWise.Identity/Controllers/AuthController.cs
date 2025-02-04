@@ -133,7 +133,10 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("validate/password-change")]
-    public async Task<IActionResult> ValidateForgetPassword([FromBody] ResetPasswordVO vo, [FromQuery] string token)
+    public async Task<IActionResult> ValidateForgetPassword(
+        [FromBody] ResetPasswordVO vo,
+        [FromQuery] string token
+    )
     {
         try
         {

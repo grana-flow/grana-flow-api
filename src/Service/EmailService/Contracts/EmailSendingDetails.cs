@@ -4,8 +4,6 @@ namespace EmailServices.Contracts;
 
 public class EmailSendingDetails
 {
-    public string Username { get; protected set; }
-    public string PasswordApp { get; protected set; }
     public string DisplayName { get; protected set; }
     public string Body { get; protected set; }
     public string Subject { get; protected set; }
@@ -14,8 +12,6 @@ public class EmailSendingDetails
     public List<string> MailAddressesTo { get; protected set; }
 
     public EmailSendingDetails(
-        string username,
-        string passwordApp,
         string displayName,
         string body,
         string subject,
@@ -24,8 +20,6 @@ public class EmailSendingDetails
         List<string> mailAddressesTo
     )
     {
-        Username = username;
-        PasswordApp = passwordApp;
         DisplayName = displayName;
         Body = body;
         Subject = subject;

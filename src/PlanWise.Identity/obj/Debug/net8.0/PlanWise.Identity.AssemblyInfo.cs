@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PlanWise.Identity")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a6f8e642bc0546e8e008561a980ff66eab91693c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+36d46b2917c37068e3ef47020dd965058f5aa4f2")]
 [assembly: System.Reflection.AssemblyProductAttribute("PlanWise.Identity")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PlanWise.Identity")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

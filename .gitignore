@@ -6,3 +6,4 @@
 /src/packages
 /bin/
 /obj/
+**/appsettings*.json
