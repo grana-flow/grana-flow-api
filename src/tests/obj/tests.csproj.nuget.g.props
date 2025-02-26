@@ -23,5 +23,6 @@
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <Pkgxunit_analyzers Condition=" '$(Pkgxunit_analyzers)' == '' ">C:\Users\leona\.nuget\packages\xunit.analyzers\1.4.0</Pkgxunit_analyzers>
     <PkgMicrosoft_Extensions_ApiDescription_Server Condition=" '$(PkgMicrosoft_Extensions_ApiDescription_Server)' == '' ">C:\Users\leona\.nuget\packages\microsoft.extensions.apidescription.server\6.0.5</PkgMicrosoft_Extensions_ApiDescription_Server>
+    <PkgSentry Condition=" '$(PkgSentry)' == '' ">C:\Users\leona\.nuget\packages\sentry\4.4.0</PkgSentry>
   </PropertyGroup>
 </Project>

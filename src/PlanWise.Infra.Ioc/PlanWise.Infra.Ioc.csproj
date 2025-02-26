@@ -18,6 +18,7 @@
     <ProjectReference Include="..\PlanWise.Application\PlanWise.Application.csproj" />
     <ProjectReference Include="..\PlanWise.Domain\PlanWise.Domain.csproj" />
     <ProjectReference Include="..\PlanWise.Infra.Data\PlanWise.Infra.Data.csproj" />
+    <ProjectReference Include="..\PlanWise.Presentation\PlanWise.Presentation.csproj" />
   </ItemGroup>
 
 </Project>

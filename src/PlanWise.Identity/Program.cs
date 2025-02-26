@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using PlanWise.Domain.Entities;
 using PlanWise.Infra.Data.Context;
 using PlanWise.Infra.Ioc.DependencyInjection;
+using PlanWise.Presentation;
 using RabbitMQServer.services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,6 +36,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+app.AddEndPoints();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
