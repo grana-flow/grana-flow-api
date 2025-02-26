@@ -129,7 +129,6 @@ C:\Users\leona\projects\PlanWise\src\PlanWise.Identity\obj\Debug\net8.0\PlanWise
 C:\Users\leona\projects\PlanWise\src\PlanWise.Identity\obj\Debug\net8.0\PlanWise.Identity.AssemblyInfoInputs.cache
 C:\Users\leona\projects\PlanWise\src\PlanWise.Identity\obj\Debug\net8.0\PlanWise.Identity.AssemblyInfo.cs
 C:\Users\leona\projects\PlanWise\src\PlanWise.Identity\obj\Debug\net8.0\PlanWise.Identity.csproj.CoreCompileInputs.cache
-C:\Users\leona\projects\PlanWise\src\PlanWise.Identity\obj\Debug\net8.0\PlanWise.Identity.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\leona\projects\PlanWise\src\PlanWise.Identity\obj\Debug\net8.0\PlanWise.Identity.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\leona\projects\PlanWise\src\PlanWise.Identity\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\leona\projects\PlanWise\src\PlanWise.Identity\obj\Debug\net8.0\staticwebassets.development.json
@@ -172,3 +171,11 @@ C:\Users\leona\projects\PlanWise\src\PlanWise.Identity\bin\Debug\net8.0\RabbitMQ
 C:\Users\leona\projects\PlanWise\src\PlanWise.Identity\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
 C:\Users\leona\projects\PlanWise\src\PlanWise.Identity\bin\Debug\net8.0\Microsoft.Extensions.FileProviders.Abstractions.dll
 C:\Users\leona\projects\PlanWise\src\PlanWise.Identity\bin\Debug\net8.0\Microsoft.Extensions.Hosting.Abstractions.dll
+C:\Users\leona\projects\PlanWise\src\PlanWise.Identity\bin\Debug\net8.0\PlanWise.Presentation.dll
+C:\Users\leona\projects\PlanWise\src\PlanWise.Identity\bin\Debug\net8.0\PlanWise.Presentation.pdb
+C:\Users\leona\projects\PlanWise\src\PlanWise.Identity\obj\Debug\net8.0\Sentry.Attributes.cs
+C:\Users\leona\projects\PlanWise\src\PlanWise.Identity\obj\Debug\net8.0\PlanWise.Identity.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\leona\projects\PlanWise\src\PlanWise.Identity\bin\Debug\net8.0\Sentry.dll
+C:\Users\leona\projects\PlanWise\src\PlanWise.Identity\bin\Debug\net8.0\Sentry.AspNetCore.dll
+C:\Users\leona\projects\PlanWise\src\PlanWise.Identity\bin\Debug\net8.0\Sentry.Extensions.Logging.dll
+C:\Users\leona\projects\PlanWise\src\PlanWise.Identity\bin\Debug\net8.0\Microsoft.AspNetCore.Mvc.Versioning.dll
