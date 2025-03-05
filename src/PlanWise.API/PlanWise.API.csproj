@@ -14,10 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PlanWise.Application\PlanWise.Application.csproj" />
-    <ProjectReference Include="..\PlanWise.Domain\PlanWise.Domain.csproj" />
-    <ProjectReference Include="..\PlanWise.Infra.Ioc\PlanWise.Infra.Ioc.csproj" />
-    <ProjectReference Include="..\PlanWise.Presentation\PlanWise.Presentation.csproj" />
+    <ProjectReference Include="..\Core\PlanWise.Application\PlanWise.Application.csproj" />
+    <ProjectReference Include="..\Core\PlanWise.Domain\PlanWise.Domain.csproj" />
+    <ProjectReference Include="..\Core\PlanWise.Infra.Ioc\PlanWise.Infra.Ioc.csproj" />
+    <ProjectReference Include="..\Core\PlanWise.Presentation\PlanWise.Presentation.csproj" />
   </ItemGroup>
 
 </Project>

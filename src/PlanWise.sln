@@ -5,25 +5,25 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{13D69981-E785-44D6-9637-FD8BCE174ECD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlanWise.Domain", "PlanWise.Domain\PlanWise.Domain.csproj", "{58DBD8A8-D1A7-4540-BB41-6AA37630608A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlanWise.Domain", "Core\PlanWise.Domain\PlanWise.Domain.csproj", "{58DBD8A8-D1A7-4540-BB41-6AA37630608A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlanWise.Application", "PlanWise.Application\PlanWise.Application.csproj", "{C076A079-2F58-4A9E-BCD7-26ACA5966E2A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlanWise.Application", "Core\PlanWise.Application\PlanWise.Application.csproj", "{C076A079-2F58-4A9E-BCD7-26ACA5966E2A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlanWise.Infra.Data", "PlanWise.Infra.Data\PlanWise.Infra.Data.csproj", "{AAFDA276-BBE7-4C54-9118-838DF1F3D027}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlanWise.Infra.Data", "Core\PlanWise.Infra.Data\PlanWise.Infra.Data.csproj", "{AAFDA276-BBE7-4C54-9118-838DF1F3D027}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlanWise.Infra.Ioc", "PlanWise.Infra.Ioc\PlanWise.Infra.Ioc.csproj", "{0AEC1DBF-0208-48EC-83F0-F67ACAAF1148}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlanWise.Infra.Ioc", "Core\PlanWise.Infra.Ioc\PlanWise.Infra.Ioc.csproj", "{0AEC1DBF-0208-48EC-83F0-F67ACAAF1148}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlanWise.API", "PlanWise.API\PlanWise.API.csproj", "{CB762575-902D-4CFF-AEAC-A50F78E153D0}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{5EC33F62-6BF7-4ED6-B061-AF0E9898EB99}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{5EC33F62-6BF7-4ED6-B061-AF0E9898EB99}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailServices", "Service\EmailService\EmailServices.csproj", "{9D04CEC0-E683-4E7E-BAA3-1A1E71FBAD30}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailServices", "Services\EmailService\EmailServices.csproj", "{9D04CEC0-E683-4E7E-BAA3-1A1E71FBAD30}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tests", "tests\tests.csproj", "{71CEF88C-6330-47B6-934E-D4D9E88F198A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitMQServer", "RabbitMQServer\RabbitMQServer.csproj", "{04FF3298-B2D7-475A-BBA9-BD5249576ADB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitMQServer", "Services\RabbitMQServer\RabbitMQServer.csproj", "{04FF3298-B2D7-475A-BBA9-BD5249576ADB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlanWise.Presentation", "PlanWise.Presentation\PlanWise.Presentation.csproj", "{3AC534BC-961E-4EC1-A930-5335302E24C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlanWise.Presentation", "Core\PlanWise.Presentation\PlanWise.Presentation.csproj", "{3AC534BC-961E-4EC1-A930-5335302E24C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
