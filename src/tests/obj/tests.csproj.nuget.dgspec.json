@@ -4,6 +4,90 @@
     "C:\\Users\\leona\\projects\\PlanWise\\src\\tests\\tests.csproj": {}
   },
   "projects": {
+    "C:\\Users\\leona\\projects\\PlanWise\\src\\PlanWise.API\\PlanWise.API.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\leona\\projects\\PlanWise\\src\\PlanWise.API\\PlanWise.API.csproj",
+        "projectName": "PlanWise.API",
+        "projectPath": "C:\\Users\\leona\\projects\\PlanWise\\src\\PlanWise.API\\PlanWise.API.csproj",
+        "packagesPath": "C:\\Users\\leona\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\leona\\projects\\PlanWise\\src\\PlanWise.API\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\leona\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\leona\\projects\\PlanWise\\src\\PlanWise.Application\\PlanWise.Application.csproj": {
+                "projectPath": "C:\\Users\\leona\\projects\\PlanWise\\src\\PlanWise.Application\\PlanWise.Application.csproj"
+              },
+              "C:\\Users\\leona\\projects\\PlanWise\\src\\PlanWise.Domain\\PlanWise.Domain.csproj": {
+                "projectPath": "C:\\Users\\leona\\projects\\PlanWise\\src\\PlanWise.Domain\\PlanWise.Domain.csproj"
+              },
+              "C:\\Users\\leona\\projects\\PlanWise\\src\\PlanWise.Infra.Ioc\\PlanWise.Infra.Ioc.csproj": {
+                "projectPath": "C:\\Users\\leona\\projects\\PlanWise\\src\\PlanWise.Infra.Ioc\\PlanWise.Infra.Ioc.csproj"
+              },
+              "C:\\Users\\leona\\projects\\PlanWise\\src\\PlanWise.Presentation\\PlanWise.Presentation.csproj": {
+                "projectPath": "C:\\Users\\leona\\projects\\PlanWise\\src\\PlanWise.Presentation\\PlanWise.Presentation.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
     "C:\\Users\\leona\\projects\\PlanWise\\src\\PlanWise.Application\\PlanWise.Application.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -139,90 +223,6 @@
           "assetTargetFallback": true,
           "warn": true,
           "frameworkReferences": {
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
-        }
-      }
-    },
-    "C:\\Users\\leona\\projects\\PlanWise\\src\\PlanWise.Identity\\PlanWise.Identity.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\Users\\leona\\projects\\PlanWise\\src\\PlanWise.Identity\\PlanWise.Identity.csproj",
-        "projectName": "PlanWise.Identity",
-        "projectPath": "C:\\Users\\leona\\projects\\PlanWise\\src\\PlanWise.Identity\\PlanWise.Identity.csproj",
-        "packagesPath": "C:\\Users\\leona\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\leona\\projects\\PlanWise\\src\\PlanWise.Identity\\obj\\",
-        "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "C:\\Users\\leona\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-        ],
-        "originalTargetFrameworks": [
-          "net8.0"
-        ],
-        "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "net8.0": {
-            "targetAlias": "net8.0",
-            "projectReferences": {
-              "C:\\Users\\leona\\projects\\PlanWise\\src\\PlanWise.Application\\PlanWise.Application.csproj": {
-                "projectPath": "C:\\Users\\leona\\projects\\PlanWise\\src\\PlanWise.Application\\PlanWise.Application.csproj"
-              },
-              "C:\\Users\\leona\\projects\\PlanWise\\src\\PlanWise.Domain\\PlanWise.Domain.csproj": {
-                "projectPath": "C:\\Users\\leona\\projects\\PlanWise\\src\\PlanWise.Domain\\PlanWise.Domain.csproj"
-              },
-              "C:\\Users\\leona\\projects\\PlanWise\\src\\PlanWise.Infra.Ioc\\PlanWise.Infra.Ioc.csproj": {
-                "projectPath": "C:\\Users\\leona\\projects\\PlanWise\\src\\PlanWise.Infra.Ioc\\PlanWise.Infra.Ioc.csproj"
-              },
-              "C:\\Users\\leona\\projects\\PlanWise\\src\\PlanWise.Presentation\\PlanWise.Presentation.csproj": {
-                "projectPath": "C:\\Users\\leona\\projects\\PlanWise\\src\\PlanWise.Presentation\\PlanWise.Presentation.csproj"
-              }
-            }
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
-        }
-      },
-      "frameworks": {
-        "net8.0": {
-          "targetAlias": "net8.0",
-          "dependencies": {
-            "Microsoft.EntityFrameworkCore.Design": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[9.0.0, )"
-            }
-          },
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48",
-            "net481"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "frameworkReferences": {
-            "Microsoft.AspNetCore.App": {
-              "privateAssets": "none"
-            },
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
@@ -650,8 +650,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\leona\\projects\\PlanWise\\src\\PlanWise.Identity\\PlanWise.Identity.csproj": {
-                "projectPath": "C:\\Users\\leona\\projects\\PlanWise\\src\\PlanWise.Identity\\PlanWise.Identity.csproj"
+              "C:\\Users\\leona\\projects\\PlanWise\\src\\PlanWise.API\\PlanWise.API.csproj": {
+                "projectPath": "C:\\Users\\leona\\projects\\PlanWise\\src\\PlanWise.API\\PlanWise.API.csproj"
               }
             }
           }

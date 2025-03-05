@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PlanWise.Infra.Ioc")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+686bd2d001da9b90ca3565fc02eeacaee9a0cfac")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1e2ae9e9f17a405a218b2536c880709a9ad38c38")]
 [assembly: System.Reflection.AssemblyProductAttribute("PlanWise.Infra.Ioc")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PlanWise.Infra.Ioc")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

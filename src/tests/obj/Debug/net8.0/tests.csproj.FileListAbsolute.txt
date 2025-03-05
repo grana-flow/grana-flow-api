@@ -125,11 +125,6 @@ C:\Users\leona\projects\PlanWise\src\tests\obj\Debug\net8.0\refint\tests.dll
 C:\Users\leona\projects\PlanWise\src\tests\obj\Debug\net8.0\tests.pdb
 C:\Users\leona\projects\PlanWise\src\tests\obj\Debug\net8.0\tests.genruntimeconfig.cache
 C:\Users\leona\projects\PlanWise\src\tests\obj\Debug\net8.0\ref\tests.dll
-C:\Users\leona\projects\PlanWise\src\tests\bin\Debug\net8.0\PlanWise.Identity.deps.json
-C:\Users\leona\projects\PlanWise\src\tests\bin\Debug\net8.0\PlanWise.Identity.runtimeconfig.json
-C:\Users\leona\projects\PlanWise\src\tests\bin\Debug\net8.0\appsettings.Development.json
-C:\Users\leona\projects\PlanWise\src\tests\bin\Debug\net8.0\appsettings.json
-C:\Users\leona\projects\PlanWise\src\tests\bin\Debug\net8.0\PlanWise.Identity.exe
 C:\Users\leona\projects\PlanWise\src\tests\bin\Debug\net8.0\Castle.Core.dll
 C:\Users\leona\projects\PlanWise\src\tests\bin\Debug\net8.0\Microsoft.OpenApi.dll
 C:\Users\leona\projects\PlanWise\src\tests\bin\Debug\net8.0\Moq.dll
@@ -139,10 +134,8 @@ C:\Users\leona\projects\PlanWise\src\tests\bin\Debug\net8.0\Swashbuckle.AspNetCo
 C:\Users\leona\projects\PlanWise\src\tests\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\leona\projects\PlanWise\src\tests\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\leona\projects\PlanWise\src\tests\bin\Debug\net8.0\System.Diagnostics.DiagnosticSource.dll
-C:\Users\leona\projects\PlanWise\src\tests\bin\Debug\net8.0\PlanWise.Identity.dll
 C:\Users\leona\projects\PlanWise\src\tests\bin\Debug\net8.0\PlanWise.Infra.Data.dll
 C:\Users\leona\projects\PlanWise\src\tests\bin\Debug\net8.0\PlanWise.Infra.Ioc.dll
-C:\Users\leona\projects\PlanWise\src\tests\bin\Debug\net8.0\PlanWise.Identity.pdb
 C:\Users\leona\projects\PlanWise\src\tests\bin\Debug\net8.0\PlanWise.Infra.Data.pdb
 C:\Users\leona\projects\PlanWise\src\tests\bin\Debug\net8.0\PlanWise.Infra.Ioc.pdb
 C:\Users\leona\projects\PlanWise\src\tests\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
@@ -176,3 +169,11 @@ C:\Users\leona\projects\PlanWise\src\tests\bin\Debug\net8.0\Asp.Versioning.Abstr
 C:\Users\leona\projects\PlanWise\src\tests\bin\Debug\net8.0\Asp.Versioning.Http.dll
 C:\Users\leona\projects\PlanWise\src\tests\bin\Debug\net8.0\Asp.Versioning.Mvc.dll
 C:\Users\leona\projects\PlanWise\src\tests\bin\Debug\net8.0\Asp.Versioning.Mvc.ApiExplorer.dll
+C:\Users\leona\projects\PlanWise\src\tests\bin\Debug\net8.0\Microsoft.AspNetCore.OpenApi.dll
+C:\Users\leona\projects\PlanWise\src\tests\bin\Debug\net8.0\PlanWise.API.deps.json
+C:\Users\leona\projects\PlanWise\src\tests\bin\Debug\net8.0\PlanWise.API.runtimeconfig.json
+C:\Users\leona\projects\PlanWise\src\tests\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\leona\projects\PlanWise\src\tests\bin\Debug\net8.0\appsettings.json
+C:\Users\leona\projects\PlanWise\src\tests\bin\Debug\net8.0\PlanWise.API.exe
+C:\Users\leona\projects\PlanWise\src\tests\bin\Debug\net8.0\PlanWise.API.dll
+C:\Users\leona\projects\PlanWise\src\tests\bin\Debug\net8.0\PlanWise.API.pdb

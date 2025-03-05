@@ -10,7 +10,7 @@
         "dependencies": {
           "Microsoft.NET.Test.Sdk": "17.8.0",
           "Moq": "4.20.72",
-          "PlanWise.Identity": "1.0.0",
+          "PlanWise.API": "1.0.0",
           "coverlet.collector": "6.0.0",
           "xunit": "2.5.3",
           "xunit.runner.visualstudio": "2.5.3"
@@ -157,6 +157,17 @@
           "lib/net8.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll": {
             "assemblyVersion": "8.0.11.0",
             "fileVersion": "8.0.1124.52116"
+          }
+        }
+      },
+      "Microsoft.AspNetCore.OpenApi/8.0.13": {
+        "dependencies": {
+          "Microsoft.OpenApi": "1.6.22"
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.AspNetCore.OpenApi.dll": {
+            "assemblyVersion": "8.0.13.0",
+            "fileVersion": "8.0.1325.6610"
           }
         }
       },
@@ -1658,6 +1669,17 @@
           "EmailServices.dll": {}
         }
       },
+      "PlanWise.API/1.0.0": {
+        "dependencies": {
+          "PlanWise.Application": "1.0.0",
+          "PlanWise.Domain": "1.0.0",
+          "PlanWise.Infra.Ioc": "1.0.0",
+          "PlanWise.Presentation": "1.0.0"
+        },
+        "runtime": {
+          "PlanWise.API.dll": {}
+        }
+      },
       "PlanWise.Application/1.0.0": {
         "dependencies": {
           "AutoMapper": "13.0.1",
@@ -1675,17 +1697,6 @@
         },
         "runtime": {
           "PlanWise.Domain.dll": {}
-        }
-      },
-      "PlanWise.Identity/1.0.0": {
-        "dependencies": {
-          "PlanWise.Application": "1.0.0",
-          "PlanWise.Domain": "1.0.0",
-          "PlanWise.Infra.Ioc": "1.0.0",
-          "PlanWise.Presentation": "1.0.0"
-        },
-        "runtime": {
-          "PlanWise.Identity.dll": {}
         }
       },
       "PlanWise.Infra.Data/1.0.0": {
@@ -1717,6 +1728,7 @@
           "Asp.Versioning.Http": "8.1.0",
           "Asp.Versioning.Mvc": "8.1.0",
           "Asp.Versioning.Mvc.ApiExplorer": "8.1.0",
+          "Microsoft.AspNetCore.OpenApi": "8.0.13",
           "PlanWise.Application": "1.0.0",
           "Sentry.AspNetCore": "4.4.0",
           "Swashbuckle.AspNetCore": "7.3.1"
@@ -1848,6 +1860,13 @@
       "sha512": "sha512-AR87eq0J3pqRPcqJUe9f5xLj8FoXxpakyjSDwvVQXWd6ClzFLQ+GPksCM009tpi6WJZblZ7qud5UZFj421UYTg==",
       "path": "microsoft.aspnetcore.identity.entityframeworkcore/8.0.11",
       "hashPath": "microsoft.aspnetcore.identity.entityframeworkcore.8.0.11.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.OpenApi/8.0.13": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-j5Ti7HD/nQpYM5re8QefQc0XyiNOagIaINIAdOPyeRgxKW69f1optcaQxi7Z7jM1q8Rsqw1IMZDig9mJsBZqPw==",
+      "path": "microsoft.aspnetcore.openapi/8.0.13",
+      "hashPath": "microsoft.aspnetcore.openapi.8.0.13.nupkg.sha512"
     },
     "Microsoft.CodeCoverage/17.8.0": {
       "type": "package",
@@ -2820,17 +2839,17 @@
       "serviceable": false,
       "sha512": ""
     },
+    "PlanWise.API/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
     "PlanWise.Application/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
     "PlanWise.Domain/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "PlanWise.Identity/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

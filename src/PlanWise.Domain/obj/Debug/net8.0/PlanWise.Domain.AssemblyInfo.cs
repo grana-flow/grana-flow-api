@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PlanWise.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+36d46b2917c37068e3ef47020dd965058f5aa4f2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1e2ae9e9f17a405a218b2536c880709a9ad38c38")]
 [assembly: System.Reflection.AssemblyProductAttribute("PlanWise.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PlanWise.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

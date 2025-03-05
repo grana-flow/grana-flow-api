@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlanWise.Infra.Data", "Plan
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlanWise.Infra.Ioc", "PlanWise.Infra.Ioc\PlanWise.Infra.Ioc.csproj", "{0AEC1DBF-0208-48EC-83F0-F67ACAAF1148}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlanWise.Identity", "PlanWise.Identity\PlanWise.Identity.csproj", "{CB762575-902D-4CFF-AEAC-A50F78E153D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlanWise.API", "PlanWise.API\PlanWise.API.csproj", "{CB762575-902D-4CFF-AEAC-A50F78E153D0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{5EC33F62-6BF7-4ED6-B061-AF0E9898EB99}"
 EndProject
@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tests", "tests\tests.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitMQServer", "RabbitMQServer\RabbitMQServer.csproj", "{04FF3298-B2D7-475A-BBA9-BD5249576ADB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlanWise.Presentation", "PlanWise.Presentation\PlanWise.Presentation.csproj", "{3AC534BC-961E-4EC1-A930-5335302E24C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlanWise.Presentation", "PlanWise.Presentation\PlanWise.Presentation.csproj", "{3AC534BC-961E-4EC1-A930-5335302E24C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

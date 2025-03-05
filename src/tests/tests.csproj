@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PlanWise.Identity\PlanWise.Identity.csproj" />
+    <ProjectReference Include="..\PlanWise.API\PlanWise.API.csproj" />
   </ItemGroup>
 
 </Project>
