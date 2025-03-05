@@ -4,6 +4,6 @@
 
 /src/.vs
 /src/packages
-/bin/
-/obj/
+**/bin*/
+**/obj*/
 **/appsettings*.json
