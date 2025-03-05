@@ -1,5 +1,5 @@
-﻿using PlanWise.Application.DTOs;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using PlanWise.Application.DTOs;
 
 namespace tests.SignIn;
 
@@ -8,7 +8,13 @@ public class EntityTests
     [Fact]
     public void Validates_User_With_All_Fields_Filled_In_Correctly()
     {
-        var user = new UserVO { Username = "userTest", Email = "user_test@gmail.com", Password = "pass@123", ConfirmPassword = "pass@123" };
+        var user = new UserVO
+        {
+            Username = "userTest",
+            Email = "user_test@gmail.com",
+            Password = "pass@123",
+            ConfirmPassword = "pass@123"
+        };
 
         var results = ValidateModel(user);
 
@@ -18,7 +24,13 @@ public class EntityTests
     [Fact]
     public void Validates_User_With_Incorrect_Email_Address()
     {
-        var user = new UserVO { Username = "userTest", Email = "user_testgmail.com", Password = "pass@123", ConfirmPassword = "pass@123" };
+        var user = new UserVO
+        {
+            Username = "userTest",
+            Email = "user_testgmail.com",
+            Password = "pass@123",
+            ConfirmPassword = "pass@123"
+        };
 
         var results = ValidateModel(user);
 
@@ -29,18 +41,33 @@ public class EntityTests
     [Fact]
     public void Validates_User_With_Incompatible_Password_Confirm()
     {
-        var user = new UserVO { Username = "userTest", Email = "user_test@gmail.com", Password = "pass@123", ConfirmPassword = "pass123" };
+        var user = new UserVO
+        {
+            Username = "userTest",
+            Email = "user_test@gmail.com",
+            Password = "pass@123",
+            ConfirmPassword = "pass123"
+        };
 
         var results = ValidateModel(user);
 
         Assert.NotEmpty(results);
-        Assert.Contains(results, err => err.ErrorMessage == "The password and confirmation password do not match");
+        Assert.Contains(
+            results,
+            err => err.ErrorMessage == "The password and confirmation password do not match"
+        );
     }
 
     [Fact]
     public void Validates_User_With_Empty_Fields()
     {
-        var user = new UserVO { Username = "", Email = "", Password = "", ConfirmPassword = "" };
+        var user = new UserVO
+        {
+            Username = "",
+            Email = "",
+            Password = "",
+            ConfirmPassword = ""
+        };
 
         var results = ValidateModel(user);
 

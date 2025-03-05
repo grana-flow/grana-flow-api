@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Asp.Versioning;
+using AutoMapper;
 using EmailServices.Interface;
 using EmailServices.Service;
 using Microsoft.AspNetCore.Identity;
@@ -11,6 +12,7 @@ using PlanWise.Application.Services;
 using PlanWise.Domain.Interfaces;
 using PlanWise.Infra.Data.Context;
 using PlanWise.Infra.Data.Repository;
+using PlanWise.Infra.Ioc.Configs.Swagger;
 using PlanWise.Infra.Ioc.DependencyInjection.Base;
 using RabbitMQServer.interfaces;
 using RabbitMQServer.services;
@@ -54,6 +56,21 @@ namespace PlanWise.Infra.Ioc.DependencyInjection
             _serviceCollection!.AddScoped<IManageAccountRepository, ManageAccountRepository>();
             _serviceCollection!.AddScoped<IEmailService, EmailService>();
             _serviceCollection!.AddSingleton<IRabbitMQMessageSender, RabbitMQMessageSender>();
+        }
+
+        public void AddApiVersioning()
+        {
+            _serviceCollection!
+                .AddApiVersioning(options =>
+                {
+                    options.DefaultApiVersion = new ApiVersion(1);
+                    options.ApiVersionReader = new UrlSegmentApiVersionReader();
+                })
+                .AddApiExplorer(options =>
+                {
+                    options.GroupNameFormat = "'v'V";
+                    options.SubstituteApiVersionInUrl = true;
+                });
         }
     }
 }

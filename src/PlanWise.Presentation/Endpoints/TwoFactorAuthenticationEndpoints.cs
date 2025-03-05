@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.Text;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.OpenApi.Any;
+using Microsoft.OpenApi.Models;
 using PlanWise.Application.DTOs;
 using PlanWise.Application.Interfaces;
 
@@ -13,14 +16,102 @@ public static class TwoFactorAuthenticationEndpoints
     {
         var group = app.MapGroup("/2FA").WithTags("2FA");
 
-        group.MapGet("verify/email", CheckEmail);
-        group.MapGet("send/token", GenerateQrCodeTwoFactor);
-        group.MapPost("verify/token", ValidateTwoFactorToken);
+        group
+            .MapGet("verify/email", CheckEmail)
+            .MapToApiVersion(1)
+            .WithOpenApi(opt =>
+            {
+                return new(opt)
+                {
+                    Summary = "Confirm e-mail",
+                    Responses =
+                    {
+                        ["200"] = new OpenApiResponse
+                        {
+                            Description = "Confirm e-mail",
+                            Content =
+                            {
+                                ["application/json"] = new OpenApiMediaType
+                                {
+                                    Schema = new OpenApiSchema
+                                    {
+                                        Type = "object",
+                                        Properties = new Dictionary<string, OpenApiSchema>
+                                        {
+                                            ["message"] = new OpenApiSchema
+                                            {
+                                                Type = "string",
+                                                Example = new OpenApiString("Email confirmed")
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        ["400"] = new OpenApiResponse
+                        {
+                            Description = "Possible reasons:\n- Invalid e-mail\n- Invalid token"
+                        }
+                    }
+                };
+            });
+        group
+            .MapGet("send/token", GenerateQrCodeTwoFactor)
+            .MapToApiVersion(1)
+            .WithOpenApi(opt =>
+            {
+                return new(opt)
+                {
+                    Summary = "Send e-mail confirmation token",
+                    Responses =
+                    {
+                        ["200"] = new OpenApiResponse
+                        {
+                            Description = "E-mail sent",
+                            Content =
+                            {
+                                ["application/json"] = new OpenApiMediaType
+                                {
+                                    Schema = new OpenApiSchema
+                                    {
+                                        Type = "object",
+                                        Properties = new Dictionary<string, OpenApiSchema>
+                                        {
+                                            ["message"] = new OpenApiSchema
+                                            {
+                                                Type = "string",
+                                                Example = new OpenApiString("Code sent")
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        ["400"] = new OpenApiResponse { Description = "E-mail not found" }
+                    }
+                };
+            });
+        group
+            .MapPost("verify/token", ValidateTwoFactorToken)
+            .MapToApiVersion(1)
+            .WithOpenApi(opt =>
+            {
+                return new(opt)
+                {
+                    Summary = "Authenticates confirmation token",
+                    Responses =
+                    {
+                        ["200"] = new OpenApiResponse { Description = "Generated JWT token", },
+                        ["401"] = new OpenApiResponse { Description = "Invalid token" },
+                        ["400"] = new OpenApiResponse { Description = "E-mail not found" }
+                    }
+                };
+            });
     }
 
-    public static async Task<IActionResult> CheckEmail(
+    public static async Task<IResult> CheckEmail(
         [FromServices] IManageAccountService service,
-        [FromQuery] string email, 
+        [FromQuery] string email,
         [FromQuery] string token
     )
     {
@@ -28,20 +119,20 @@ public static class TwoFactorAuthenticationEndpoints
         {
             var confirmedEmail = await service.ConfirmEmail(email, token);
 
-            return new ContentResult
-            {
-                Content = await confirmedEmail.Content.ReadAsStringAsync(),
-                ContentType = "application/json",
-                StatusCode = (int)confirmedEmail.StatusCode
-            };
+            return Results.Content(
+                await confirmedEmail.Content.ReadAsStringAsync(),
+                "application/json",
+                Encoding.UTF8,
+                (int)confirmedEmail.StatusCode
+            );
         }
         catch (Exception ex)
         {
-            return new BadRequestObjectResult(new { message = ex.Message });
+            return Results.BadRequest(new { message = ex.Message });
         }
     }
 
-    public static async Task<IActionResult> GenerateQrCodeTwoFactor(
+    public static async Task<IResult> GenerateQrCodeTwoFactor(
         [FromServices] IManageAccountService service,
         [FromHeader] string email
     )
@@ -50,20 +141,20 @@ public static class TwoFactorAuthenticationEndpoints
         {
             var token = await service.GenerateTwoFactorToken(email);
 
-            return new ContentResult
-            {
-                Content = await token.Content.ReadAsStringAsync(),
-                ContentType = "application/json",
-                StatusCode = (int)token.StatusCode
-            };
+            return Results.Content(
+                await token.Content.ReadAsStringAsync(),
+                "application/json",
+                Encoding.UTF8,
+                (int)token.StatusCode
+            );
         }
         catch (Exception ex)
         {
-            return new BadRequestObjectResult(new { message = ex.Message });
+            return Results.BadRequest(new { message = ex.Message });
         }
     }
 
-    public static async Task<IActionResult> ValidateTwoFactorToken(
+    public static async Task<IResult> ValidateTwoFactorToken(
         [FromServices] IManageAccountService service,
         [FromBody] ValidateTwoFactor vo
     )
@@ -72,16 +163,16 @@ public static class TwoFactorAuthenticationEndpoints
         {
             var validated = await service.ValidateTwoFactorToken(vo);
 
-            return new ContentResult
-            {
-                Content = await validated.Content.ReadAsStringAsync(),
-                ContentType = "application/json",
-                StatusCode = (int)validated.StatusCode
-            };
+            return Results.Content(
+                await validated.Content.ReadAsStringAsync(),
+                "application/json",
+                Encoding.UTF8,
+                (int)validated.StatusCode
+            );
         }
         catch (Exception ex)
         {
-            return new BadRequestObjectResult(new { message = ex.Message });
+            return Results.BadRequest(new { message = ex.Message });
         }
     }
 }

@@ -1,6 +1,9 @@
+using Asp.Versioning;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.OpenApi.Models;
 using PlanWise.Domain.Entities;
 using PlanWise.Infra.Data.Context;
+using PlanWise.Infra.Ioc.Configs.Swagger;
 using PlanWise.Infra.Ioc.DependencyInjection;
 using PlanWise.Presentation;
 using RabbitMQServer.services;
@@ -32,19 +35,16 @@ builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerConfiguration();
+
+structureDependencies.AddApiVersioning();
 
 var app = builder.Build();
 
 app.AddEndPoints();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwaggerConfiguration();
 
 app.UseHttpsRedirection();
 
