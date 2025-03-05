@@ -178,4 +178,8 @@ C:\Users\leona\projects\PlanWise\src\PlanWise.Identity\obj\Debug\net8.0\PlanWise
 C:\Users\leona\projects\PlanWise\src\PlanWise.Identity\bin\Debug\net8.0\Sentry.dll
 C:\Users\leona\projects\PlanWise\src\PlanWise.Identity\bin\Debug\net8.0\Sentry.AspNetCore.dll
 C:\Users\leona\projects\PlanWise\src\PlanWise.Identity\bin\Debug\net8.0\Sentry.Extensions.Logging.dll
-C:\Users\leona\projects\PlanWise\src\PlanWise.Identity\bin\Debug\net8.0\Microsoft.AspNetCore.Mvc.Versioning.dll
+C:\Users\leona\projects\PlanWise\src\PlanWise.Identity\bin\Debug\net8.0\Asp.Versioning.Abstractions.dll
+C:\Users\leona\projects\PlanWise\src\PlanWise.Identity\bin\Debug\net8.0\Asp.Versioning.Http.dll
+C:\Users\leona\projects\PlanWise\src\PlanWise.Identity\bin\Debug\net8.0\Asp.Versioning.Mvc.dll
+C:\Users\leona\projects\PlanWise\src\PlanWise.Identity\bin\Debug\net8.0\Asp.Versioning.Mvc.ApiExplorer.dll
+C:\Users\leona\projects\PlanWise\src\PlanWise.Identity\bin\Debug\net8.0\Microsoft.AspNetCore.OpenApi.dll
