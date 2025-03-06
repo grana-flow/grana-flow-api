@@ -1,14 +1,14 @@
-﻿using PlanWise.Application.DTOs;
+﻿using PlanWise.Domain.Contracts;
 
 namespace PlanWise.Application.Interfaces;
 
 public interface IManageAccountService
 {
-    Task<HttpResponseMessage> CreateAccount(UserVO model, string endpointPathToConfirmEmail);
-    Task<HttpResponseMessage> SignIn(SignInVO model);
+    Task<HttpResponseMessage> CreateAccount(CreateUser model, string endpointPathToConfirmEmail);
+    Task<HttpResponseMessage> SignIn(SignIn model);
     Task<HttpResponseMessage> ConfirmEmail(string email, string token);
     Task<HttpResponseMessage> GenerateTwoFactorToken(string email);
-    Task<HttpResponseMessage> ValidateTwoFactorToken(ValidateTwoFactor vo);
+    Task<HttpResponseMessage> ValidateTwoFactorToken(ValidateTwoFactorAuthentication model);
     Task<HttpResponseMessage> RequestForgetPassword(string email, string endpointPathToVerifyReset);
-    Task<HttpResponseMessage> ValidateForgetPassword(ResetPasswordVO vo, string token);
+    Task<HttpResponseMessage> ValidateForgetPassword(ResetPassword model, string token);
 }

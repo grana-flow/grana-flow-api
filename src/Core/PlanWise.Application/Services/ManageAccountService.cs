@@ -1,12 +1,12 @@
 ﻿using System.Net;
 using System.Text.Json;
-using AutoMapper;
 using EmailServices.Contracts;
 using EmailServices.Utils;
 using Microsoft.Extensions.Configuration;
-using PlanWise.Application.DTOs;
 using PlanWise.Application.Interfaces;
+using PlanWise.Domain.Contracts;
 using PlanWise.Domain.Entities;
+using PlanWise.Domain.Exceptions;
 using PlanWise.Domain.Interfaces;
 using RabbitMQServer.contracts;
 using RabbitMQServer.interfaces;
@@ -16,33 +16,30 @@ namespace PlanWise.Application.Services;
 public class ManageAccountService : IManageAccountService
 {
     private readonly IManageAccountRepository _repository;
-    private readonly IMapper _mapper;
-    private readonly IConfiguration _config;
     private readonly IRabbitMQMessageSender _rabbitMQServer;
     private readonly IConfiguration _configuration;
 
     public ManageAccountService(
         IManageAccountRepository repository,
-        IMapper mapper,
-        IConfiguration config,
         IRabbitMQMessageSender rabbitMqServer,
         IConfiguration configuration
     )
     {
         _repository = repository;
-        _mapper = mapper;
-        _config = config;
         _rabbitMQServer = rabbitMqServer;
         _configuration = configuration;
     }
 
     public async Task<HttpResponseMessage> CreateAccount(
-        UserVO model,
+        CreateUser model,
         string endpointPathToConfirmEmail
     )
     {
-        var user = _mapper.Map<User>(model);
+        var emailAlreadyExists = await _repository.EmailAlreadyExists(model.Email);
+        if (emailAlreadyExists)
+            throw new EmailAlreadyRegisteredException(model.Email);
 
+        var user = User.CreateUser(model);
         var result = await _repository.CreateAccount(user, model.Password);
 
         if (result.Succeeded)
@@ -85,23 +82,20 @@ public class ManageAccountService : IManageAccountService
                 )
             };
         }
-        else
+        return new HttpResponseMessage
         {
-            return new HttpResponseMessage
-            {
-                StatusCode = HttpStatusCode.BadRequest,
-                Content = new StringContent(
-                    JsonSerializer.Serialize(
-                        new { message = result.Errors.FirstOrDefault()?.Description }
-                    ),
-                    System.Text.Encoding.UTF8,
-                    "application/json"
-                )
-            };
-        }
+            StatusCode = HttpStatusCode.BadRequest,
+            Content = new StringContent(
+                JsonSerializer.Serialize(
+                    new { message = result.Errors.FirstOrDefault()?.Description }
+                ),
+                System.Text.Encoding.UTF8,
+                "application/json"
+            )
+        };
     }
 
-    public async Task<HttpResponseMessage> SignIn(SignInVO model)
+    public async Task<HttpResponseMessage> SignIn(SignIn model)
     {
         var user = await _repository.FindByEmail(model.Email);
 
@@ -260,11 +254,11 @@ public class ManageAccountService : IManageAccountService
         };
     }
 
-    public async Task<HttpResponseMessage> ValidateTwoFactorToken(ValidateTwoFactor vo)
+    public async Task<HttpResponseMessage> ValidateTwoFactorToken(ValidateTwoFactorAuthentication model)
     {
-        var user = await _repository.FindByEmail(vo.Email);
+        var user = await _repository.FindByEmail(model.Email);
 
-        var isValid = await _repository.VerifyTwoFactorToken(user!, "Email", vo.Token);
+        var isValid = await _repository.VerifyTwoFactorToken(user!, "Email", model.Token);
         if (!isValid)
             return new HttpResponseMessage
             {
@@ -333,14 +327,14 @@ public class ManageAccountService : IManageAccountService
         };
     }
 
-    public async Task<HttpResponseMessage> ValidateForgetPassword(ResetPasswordVO vo, string token)
+    public async Task<HttpResponseMessage> ValidateForgetPassword(ResetPassword model, string token)
     {
-        var user = await _repository.FindByEmail(vo.Email);
+        var user = await _repository.FindByEmail(model.Email);
         var decodedToken = WebUtility.UrlDecode(token);
         var resetPasswordResult = await _repository.ValidateResetPassword(
             user!,
             decodedToken,
-            vo.Password
+            model.Password
         );
 
         if (resetPasswordResult.Succeeded)

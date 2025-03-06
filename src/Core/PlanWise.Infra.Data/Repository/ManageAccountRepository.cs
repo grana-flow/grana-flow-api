@@ -1,6 +1,7 @@
 ﻿using System.Web;
 using Microsoft.AspNetCore.Identity;
 using PlanWise.Domain.Entities;
+using PlanWise.Domain.Exceptions;
 using PlanWise.Domain.Interfaces;
 
 namespace PlanWise.Infra.Data.Repository;
@@ -19,15 +20,21 @@ public class ManageAccountRepository : IManageAccountRepository
         return await _userManager.CreateAsync(user, password);
     }
 
-    public async Task<User> FindByEmail(string email)
+    public async Task<User?> FindByEmail(string email)
     {
         return await _userManager.FindByEmailAsync(email)
-            ?? throw new KeyNotFoundException("Email not found.");
+            ?? throw new EmailNotFoundException();
     }
 
     public async Task<bool> IsEmailConfirmed(User user)
     {
         return await _userManager.IsEmailConfirmedAsync(user);
+    }
+
+    public async Task<bool> EmailAlreadyExists(string email)
+    {
+        var user = await _userManager.FindByEmailAsync(email);
+        return user != null;
     }
 
     public async Task<bool> CheckPassword(User user, string password)

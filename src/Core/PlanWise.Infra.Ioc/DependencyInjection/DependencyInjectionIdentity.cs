@@ -1,5 +1,4 @@
 ﻿using Asp.Versioning;
-using AutoMapper;
 using EmailServices.Interface;
 using EmailServices.Service;
 using Microsoft.AspNetCore.Identity;
@@ -7,12 +6,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PlanWise.Application.Interfaces;
-using PlanWise.Application.Mappings;
 using PlanWise.Application.Services;
 using PlanWise.Domain.Interfaces;
 using PlanWise.Infra.Data.Context;
 using PlanWise.Infra.Data.Repository;
-using PlanWise.Infra.Ioc.Configs.Swagger;
 using PlanWise.Infra.Ioc.DependencyInjection.Base;
 using RabbitMQServer.interfaces;
 using RabbitMQServer.services;
@@ -50,8 +47,6 @@ namespace PlanWise.Infra.Ioc.DependencyInjection
 
         public void AddScopedAndDependencies()
         {
-            IMapper mapper = DomainToMappingUser.RegisterMaps().CreateMapper();
-            _serviceCollection!.AddSingleton(mapper);
             _serviceCollection!.AddScoped<IManageAccountService, ManageAccountService>();
             _serviceCollection!.AddScoped<IManageAccountRepository, ManageAccountRepository>();
             _serviceCollection!.AddScoped<IEmailService, EmailService>();

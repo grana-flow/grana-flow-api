@@ -1,18 +1,18 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PlanWise.Application.DTOs;
+namespace PlanWise.Domain.Contracts;
 
-public class ResetPasswordVO
+public record class ResetPassword
 {
-    [Required]
+    [Required(ErrorMessage = "{0} is required")]
     [DataType(DataType.Password)]
     public required string Password { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = "{0} is required")]
     [DataType(DataType.Password)]
     [Compare("Password", ErrorMessage = "The password and confirmation password do not match")]
     public required string ConfirmPassword { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = "{0} is required")]
     public required string Email { get; set; }
 }

@@ -5,8 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
-using PlanWise.Application.DTOs;
 using PlanWise.Application.Interfaces;
+using PlanWise.Domain.Contracts;
+using PlanWise.Domain.Exceptions;
 
 namespace PlanWise.Presentation.Endpoints;
 
@@ -30,6 +31,11 @@ public static class AuthEndpoints
                         ["206"] = new OpenApiResponse
                         {
                             Description = "Two-factor authentication required"
+                        },
+                        ["404"] = new OpenApiResponse
+                        {
+                            Description =
+                                "E-mail nor found"
                         },
                         ["400"] = new OpenApiResponse
                         {
@@ -75,7 +81,7 @@ public static class AuthEndpoints
                         },
                         ["400"] = new OpenApiResponse
                         {
-                            Description = "E-mail may be in use",
+                            Description = "Possible reasons:\n- E-mail already registered\n- Username already registered",
                             Content =
                             {
                                 ["application/json"] = new OpenApiMediaType
@@ -88,7 +94,7 @@ public static class AuthEndpoints
                                             ["message"] = new OpenApiSchema
                                             {
                                                 Type = "string",
-                                                Example = new OpenApiString("E-mail may be in use")
+                                                Example = new OpenApiString("Message error")
                                             }
                                         }
                                     }
@@ -132,7 +138,12 @@ public static class AuthEndpoints
                                     }
                                 }
                             }
-                        }
+                        },
+                        ["404"] = new OpenApiResponse
+                        {
+                            Description =
+                                "E-mail not found"
+                        },
                     }
                 };
             });
@@ -171,6 +182,11 @@ public static class AuthEndpoints
                                 }
                             }
                         },
+                        ["404"] = new OpenApiResponse
+                        {
+                            Description =
+                                "E-mail not found"
+                        },
                         ["400"] = new OpenApiResponse
                         {
                             Description =
@@ -183,7 +199,7 @@ public static class AuthEndpoints
 
     public static async Task<IResult> SignIn(
         [FromServices] IManageAccountService service,
-        [FromBody] SignInVO model
+        [FromBody] SignIn model
     )
     {
         try
@@ -197,6 +213,10 @@ public static class AuthEndpoints
                 (int)authenticatedUser.StatusCode
             );
         }
+        catch (EmailNotFoundException ex)
+        {
+            return Results.NotFound(new { message = ex.Message });
+        }
         catch (Exception ex)
         {
             return Results.BadRequest(new { message = ex.Message });
@@ -206,19 +226,26 @@ public static class AuthEndpoints
     public static async Task<IResult> SignUp(
         HttpRequest httpRequest,
         [FromServices] IManageAccountService service,
-        [FromBody] UserVO model
+        [FromBody] CreateUser model
     )
     {
-        var baseUrl =
-            $"{httpRequest.Scheme}://{httpRequest.Host}{httpRequest.PathBase}/api/v1/2FA/verify/email";
-        var registeredUser = await service.CreateAccount(model, baseUrl);
+        try
+        {
+            var baseUrl =
+                $"{httpRequest.Scheme}://{httpRequest.Host}{httpRequest.PathBase}/api/v1/2FA/verify/email";
+            var registeredUser = await service.CreateAccount(model, baseUrl);
 
-        return Results.Content(
-            await registeredUser.Content.ReadAsStringAsync(),
-            "application/json",
-            Encoding.UTF8,
-            (int)registeredUser.StatusCode
-        );
+            return Results.Content(
+                await registeredUser.Content.ReadAsStringAsync(),
+                "application/json",
+                Encoding.UTF8,
+                (int)registeredUser.StatusCode
+            );
+        }
+        catch (Exception ex)
+        {
+            return Results.BadRequest(new { message = ex.Message });
+        }
     }
 
     public static async Task<IResult> ForgetPassword(
@@ -240,6 +267,10 @@ public static class AuthEndpoints
                 (int)forgetPassword.StatusCode
             );
         }
+        catch (EmailNotFoundException ex)
+        {
+            return Results.NotFound(new { message = ex.Message });
+        }
         catch (Exception ex)
         {
             return Results.BadRequest(new { message = ex.Message });
@@ -248,7 +279,7 @@ public static class AuthEndpoints
 
     public static async Task<IResult> ValidateForgetPassword(
         [FromServices] IManageAccountService service,
-        [FromBody] ResetPasswordVO vo,
+        [FromBody] ResetPassword vo,
         [FromQuery] string token
     )
     {
@@ -262,6 +293,10 @@ public static class AuthEndpoints
                 Encoding.UTF8,
                 (int)passwordChanged.StatusCode
             );
+        }
+        catch (EmailNotFoundException ex)
+        {
+            return Results.NotFound(new { message = ex.Message });
         }
         catch (Exception ex)
         {

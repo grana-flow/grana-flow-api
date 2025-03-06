@@ -5,8 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
-using PlanWise.Application.DTOs;
 using PlanWise.Application.Interfaces;
+using PlanWise.Domain.Contracts;
+using PlanWise.Domain.Exceptions;
 
 namespace PlanWise.Presentation.Endpoints;
 
@@ -48,6 +49,10 @@ public static class TwoFactorAuthenticationEndpoints
                                 }
                             }
                         },
+                        ["404"] = new OpenApiResponse
+                        {
+                            Description = "E-mail nbot found"
+                        },
                         ["400"] = new OpenApiResponse
                         {
                             Description = "Possible reasons:\n- Invalid e-mail\n- Invalid token"
@@ -87,7 +92,7 @@ public static class TwoFactorAuthenticationEndpoints
                                 }
                             }
                         },
-                        ["400"] = new OpenApiResponse { Description = "E-mail not found" }
+                        ["404"] = new OpenApiResponse { Description = "E-mail not found" }
                     }
                 };
             });
@@ -103,7 +108,7 @@ public static class TwoFactorAuthenticationEndpoints
                     {
                         ["200"] = new OpenApiResponse { Description = "Generated JWT token", },
                         ["401"] = new OpenApiResponse { Description = "Invalid token" },
-                        ["400"] = new OpenApiResponse { Description = "E-mail not found" }
+                        ["404"] = new OpenApiResponse { Description = "E-mail not found" }
                     }
                 };
             });
@@ -125,6 +130,10 @@ public static class TwoFactorAuthenticationEndpoints
                 Encoding.UTF8,
                 (int)confirmedEmail.StatusCode
             );
+        }
+        catch (EmailNotFoundException ex)
+        {
+            return Results.NotFound(new { message = ex.Message });
         }
         catch (Exception ex)
         {
@@ -148,6 +157,10 @@ public static class TwoFactorAuthenticationEndpoints
                 (int)token.StatusCode
             );
         }
+        catch (EmailNotFoundException ex)
+        {
+            return Results.NotFound(new { message = ex.Message });
+        }
         catch (Exception ex)
         {
             return Results.BadRequest(new { message = ex.Message });
@@ -156,12 +169,12 @@ public static class TwoFactorAuthenticationEndpoints
 
     public static async Task<IResult> ValidateTwoFactorToken(
         [FromServices] IManageAccountService service,
-        [FromBody] ValidateTwoFactor vo
+        [FromBody] ValidateTwoFactorAuthentication model
     )
     {
         try
         {
-            var validated = await service.ValidateTwoFactorToken(vo);
+            var validated = await service.ValidateTwoFactorToken(model);
 
             return Results.Content(
                 await validated.Content.ReadAsStringAsync(),
@@ -169,6 +182,10 @@ public static class TwoFactorAuthenticationEndpoints
                 Encoding.UTF8,
                 (int)validated.StatusCode
             );
+        }
+        catch (EmailNotFoundException ex)
+        {
+            return Results.NotFound(new { message = ex.Message });
         }
         catch (Exception ex)
         {

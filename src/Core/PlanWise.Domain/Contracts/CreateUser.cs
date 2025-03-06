@@ -1,17 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PlanWise.Application.DTOs;
+namespace PlanWise.Domain.Contracts;
 
-public class UserVO
+public record class CreateUser
 {
     [Required(ErrorMessage = "{0} is required")]
     public required string Username { get; set; }
 
-    [Required(ErrorMessage = "Email is required")]
+    [Required(ErrorMessage = "{0} is required")]
     [EmailAddress(ErrorMessage = "Enter a valid email")]
     public required string Email { get; set; }
 
-    [Required(ErrorMessage = "Password is required")]
+    [Required(ErrorMessage = "{0} is required")]
     public required string Password { get; set; }
 
     [Required(ErrorMessage = "{0} is required")]
