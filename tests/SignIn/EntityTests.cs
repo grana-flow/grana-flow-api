@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using PlanWise.Application.DTOs;
+﻿using PlanWise.Domain.Contracts;
+using System.ComponentModel.DataAnnotations;
 
 namespace tests.SignIn;
 
@@ -8,7 +8,7 @@ public class EntityTests
     [Fact]
     public void Validates_User_With_All_Fields_Filled_In_Correctly()
     {
-        var user = new UserVO
+        var createUser = new CreateUser
         {
             Username = "userTest",
             Email = "user_test@gmail.com",
@@ -16,7 +16,7 @@ public class EntityTests
             ConfirmPassword = "pass@123"
         };
 
-        var results = ValidateModel(user);
+        var results = ValidateModel(createUser);
 
         Assert.Empty(results);
     }
@@ -24,7 +24,7 @@ public class EntityTests
     [Fact]
     public void Validates_User_With_Incorrect_Email_Address()
     {
-        var user = new UserVO
+        var createUser = new CreateUser
         {
             Username = "userTest",
             Email = "user_testgmail.com",
@@ -32,7 +32,7 @@ public class EntityTests
             ConfirmPassword = "pass@123"
         };
 
-        var results = ValidateModel(user);
+        var results = ValidateModel(createUser);
 
         Assert.NotEmpty(results);
         Assert.Contains(results, err => err.ErrorMessage == "Enter a valid email");
@@ -41,7 +41,7 @@ public class EntityTests
     [Fact]
     public void Validates_User_With_Incompatible_Password_Confirm()
     {
-        var user = new UserVO
+        var createUser = new CreateUser
         {
             Username = "userTest",
             Email = "user_test@gmail.com",
@@ -49,7 +49,7 @@ public class EntityTests
             ConfirmPassword = "pass123"
         };
 
-        var results = ValidateModel(user);
+        var results = ValidateModel(createUser);
 
         Assert.NotEmpty(results);
         Assert.Contains(
@@ -61,7 +61,7 @@ public class EntityTests
     [Fact]
     public void Validates_User_With_Empty_Fields()
     {
-        var user = new UserVO
+        var createUser = new CreateUser
         {
             Username = "",
             Email = "",
@@ -69,7 +69,7 @@ public class EntityTests
             ConfirmPassword = ""
         };
 
-        var results = ValidateModel(user);
+        var results = ValidateModel(createUser);
 
         Assert.NotEmpty(results);
         Assert.Contains(results, err => err.ErrorMessage == "Email is required");
