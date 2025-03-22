@@ -9,6 +9,9 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="GoogleAuthenticator" Version="3.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="8.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="8.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>

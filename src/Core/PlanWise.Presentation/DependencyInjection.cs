@@ -18,7 +18,7 @@ public static class DependencyInjection
         RouteGroupBuilder groupBuilder = app.MapGroup("api/v{apiVersion:apiVersion}")
             .WithApiVersionSet(apiVersionSet);
 
-        groupBuilder.AddAuthEndPoints();
+        //groupBuilder.AddAuthEndPoints();
         groupBuilder.AddTwoFactorAuthenticationEndPoints();
 
         return app;
