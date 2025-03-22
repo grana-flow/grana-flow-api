@@ -37,6 +37,8 @@ builder.Services.AddSwaggerConfiguration();
 
 structureDependencies.AddApiVersioning();
 
+structureDependencies.ConfigAuthentication();
+
 var app = builder.Build();
 
 app.AddEndPoints();

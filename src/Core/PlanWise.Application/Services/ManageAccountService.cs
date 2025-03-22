@@ -4,6 +4,7 @@ using EmailServices.Contracts;
 using EmailServices.Utils;
 using Microsoft.Extensions.Configuration;
 using PlanWise.Application.Interfaces;
+using PlanWise.Application.JWT;
 using PlanWise.Domain.Contracts;
 using PlanWise.Domain.Entities;
 using PlanWise.Domain.Exceptions;
@@ -165,11 +166,12 @@ public class ManageAccountService : IManageAccountService
             };
         }
 
+        var jwtToken = JwtToken.GenerateToken(_configuration, user);
         return new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.OK,
             Content = new StringContent(
-                JsonSerializer.Serialize(new { message = "Generate token." }),
+                JsonSerializer.Serialize(jwtToken),
                 System.Text.Encoding.UTF8,
                 "application/json"
             )
