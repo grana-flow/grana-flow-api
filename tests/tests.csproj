@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\PlanWise.API\PlanWise.API.csproj" />
+    <ProjectReference Include="..\src\GranaFlow.API\GranaFlow.API.csproj" />
   </ItemGroup>
 
 </Project>

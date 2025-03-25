@@ -1,0 +1,8 @@
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using GranaFlow.Domain.Entities;
+
+namespace GranaFlow.Infra.Data.Context;
+
+public class ApplicationDbContextIdentity(DbContextOptions<ApplicationDbContextIdentity> options)
+    : IdentityDbContext<User>(options) { }

@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Moq;
-using PlanWise.Domain.Contracts;
-using PlanWise.Domain.Entities;
-using PlanWise.Domain.Interfaces;
+using GranaFlow.Domain.Contracts;
+using GranaFlow.Domain.Entities;
+using GranaFlow.Domain.Interfaces;
 
 namespace tests.SignIn;
 

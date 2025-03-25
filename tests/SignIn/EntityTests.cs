@@ -1,4 +1,4 @@
-﻿using PlanWise.Domain.Contracts;
+﻿using GranaFlow.Domain.Contracts;
 using System.ComponentModel.DataAnnotations;
 
 namespace tests.SignIn;
