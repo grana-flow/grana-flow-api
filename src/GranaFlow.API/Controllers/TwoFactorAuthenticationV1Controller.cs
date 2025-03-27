@@ -4,6 +4,8 @@ using GranaFlow.Application.Interfaces;
 using GranaFlow.Domain.Contracts;
 using GranaFlow.Domain.Exceptions;
 using System.Text;
+using GranaFlow.Infra.Ioc.Configs.Swagger.ExampleResponse;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace GranaFlow.API.Controllers;
 
@@ -21,6 +23,10 @@ public class TwoFactorAuthenticationV1Controller : Controller
     }
 
     [HttpGet("verify/email")]
+    [SwaggerOperation("Valida confirmação de e-mail")]
+    [SwaggerResponse(StatusCodes.Status200OK, "E-mail confirmado")]
+    [SwaggerResponse(StatusCodes.Status400BadRequest, "Confirmação inválida (token incorreto)")]
+    [SwaggerResponse(StatusCodes.Status404NotFound, "E-mail não encontrado")]
     public async Task<IResult> CheckEmail([FromQuery] string email, [FromQuery] string token)
     {
         try
@@ -45,6 +51,9 @@ public class TwoFactorAuthenticationV1Controller : Controller
     }
 
     [HttpGet("send/token")]
+    [SwaggerOperation("Envia token de auth 2 fatores")]
+    [SwaggerResponse(StatusCodes.Status200OK, "Código enviado para e-mail")]
+    [SwaggerResponse(StatusCodes.Status404NotFound, "E-mail não encontrado")]
     public async Task<IResult> GenerateTokenTwoFactor([FromHeader] string email)
     {
         try
@@ -69,6 +78,10 @@ public class TwoFactorAuthenticationV1Controller : Controller
     }
 
     [HttpPost("verify/token")]
+    [SwaggerOperation("Valida código de auth 2 fatores")]
+    [SwaggerResponse(StatusCodes.Status200OK, "Token gerado", typeof(SignInResponse))]
+    [SwaggerResponse(StatusCodes.Status401Unauthorized, "Token inválido")]
+    [SwaggerResponse(StatusCodes.Status404NotFound, "E-mail não encontrado")]
     public async Task<IResult> ValidateTwoFactorToken([FromBody] ValidateTwoFactorAuthentication model)
     {
         try
