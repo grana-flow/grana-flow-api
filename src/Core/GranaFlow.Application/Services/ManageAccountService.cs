@@ -72,14 +72,7 @@ public class ManageAccountService : IManageAccountService
 
             return new HttpResponseMessage
             {
-                StatusCode = HttpStatusCode.Created,
-                Content = new StringContent(
-                    JsonSerializer.Serialize(
-                        new { message = "User registered. Check your email to confirm it." }
-                    ),
-                    System.Text.Encoding.UTF8,
-                    "application/json"
-                )
+                StatusCode = HttpStatusCode.Created
             };
         }
         return new HttpResponseMessage
@@ -102,25 +95,13 @@ public class ManageAccountService : IManageAccountService
         if (!user!.EmailConfirmed)
             return new HttpResponseMessage
             {
-                StatusCode = HttpStatusCode.Unauthorized,
-                Content = new StringContent(
-                    JsonSerializer.Serialize(
-                        new { message = "Email not yet confirmed. Check your email inbox." }
-                    ),
-                    System.Text.Encoding.UTF8,
-                    "application/json"
-                )
+                StatusCode = HttpStatusCode.UnprocessableEntity
             };
 
         if (!await _repository.CheckPassword(user, model.Password))
             return new HttpResponseMessage
             {
-                StatusCode = HttpStatusCode.Unauthorized,
-                Content = new StringContent(
-                    JsonSerializer.Serialize(new { message = "Invalid authentication." }),
-                    System.Text.Encoding.UTF8,
-                    "application/json"
-                )
+                StatusCode = HttpStatusCode.Unauthorized
             };
 
         if (user.TwoFactorEnabled)
@@ -180,20 +161,7 @@ public class ManageAccountService : IManageAccountService
     {
         var user = await _repository.FindByEmail(email);
 
-        if (user is null)
-            return new HttpResponseMessage
-            {
-                StatusCode = HttpStatusCode.BadRequest,
-                Content = new StringContent(
-                    JsonSerializer.Serialize(
-                        new { message = "Invalid Email Confirmation Request." }
-                    ),
-                    System.Text.Encoding.UTF8,
-                    "application/json"
-                )
-            };
-
-        var confirmEmail = await _repository.ConfirmEmail(user, token);
+        var confirmEmail = await _repository.ConfirmEmail(user!, token);
         if (!confirmEmail.Succeeded)
             return new HttpResponseMessage
             {
@@ -209,12 +177,7 @@ public class ManageAccountService : IManageAccountService
 
         return new HttpResponseMessage
         {
-            StatusCode = HttpStatusCode.OK,
-            Content = new StringContent(
-                JsonSerializer.Serialize(new { message = "Email confirmed!" }),
-                System.Text.Encoding.UTF8,
-                "application/json"
-            )
+            StatusCode = HttpStatusCode.OK
         };
     }
 
@@ -245,12 +208,7 @@ public class ManageAccountService : IManageAccountService
 
         return new HttpResponseMessage
         {
-            StatusCode = HttpStatusCode.OK,
-            Content = new StringContent(
-                JsonSerializer.Serialize(new { message = "Code sent to email." }),
-                System.Text.Encoding.UTF8,
-                "application/json"
-            )
+            StatusCode = HttpStatusCode.OK
         };
     }
 
@@ -262,12 +220,7 @@ public class ManageAccountService : IManageAccountService
         if (!isValid)
             return new HttpResponseMessage
             {
-                StatusCode = HttpStatusCode.Unauthorized,
-                Content = new StringContent(
-                    JsonSerializer.Serialize(new { message = "Invalid token." }),
-                    System.Text.Encoding.UTF8,
-                    "application/json"
-                )
+                StatusCode = HttpStatusCode.Unauthorized
             };
 
         // TODO: gerar token JWT
@@ -316,14 +269,7 @@ public class ManageAccountService : IManageAccountService
 
         return new HttpResponseMessage
         {
-            StatusCode = HttpStatusCode.OK,
-            Content = new StringContent(
-                JsonSerializer.Serialize(
-                    new { message = "Password reset link sent to registered email." }
-                ),
-                System.Text.Encoding.UTF8,
-                "application/json"
-            )
+            StatusCode = HttpStatusCode.OK
         };
     }
 
@@ -340,12 +286,7 @@ public class ManageAccountService : IManageAccountService
         if (resetPasswordResult.Succeeded)
             return new HttpResponseMessage
             {
-                StatusCode = HttpStatusCode.OK,
-                Content = new StringContent(
-                    JsonSerializer.Serialize(new { message = "Your password has been changed." }),
-                    System.Text.Encoding.UTF8,
-                    "application/json"
-                )
+                StatusCode = HttpStatusCode.OK
             };
 
         return new HttpResponseMessage

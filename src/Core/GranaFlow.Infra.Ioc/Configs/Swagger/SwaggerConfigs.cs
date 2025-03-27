@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using GranaFlow.Infra.Ioc.Configs.Swagger.ExampleResponse;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace GranaFlow.Infra.Ioc.Configs.Swagger;
 
@@ -12,6 +14,8 @@ public static class SwaggerConfigs
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(opt =>
         {
+            opt.EnableAnnotations();
+            opt.ExampleFilters();
             opt.SwaggerDoc(
                 "v1",
                 new OpenApiInfo
@@ -27,6 +31,7 @@ public static class SwaggerConfigs
                 }
             );
         });
+        services.AddSwaggerExamplesFromAssemblyOf<SignInResponseExample>();
     }
 
     public static void UseSwaggerConfiguration(this WebApplication app)

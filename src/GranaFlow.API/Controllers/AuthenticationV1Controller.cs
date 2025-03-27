@@ -4,6 +4,8 @@ using GranaFlow.Application.Interfaces;
 using GranaFlow.Domain.Contracts;
 using GranaFlow.Domain.Exceptions;
 using System.Text;
+using Swashbuckle.AspNetCore.Annotations;
+using GranaFlow.Infra.Ioc.Configs.Swagger.ExampleResponse;
 
 namespace GranaFlow.API.Controllers;
 
@@ -21,6 +23,12 @@ public class AuthenticationV1Controller : Controller
     }
 
     [HttpPost("sign-in")]
+    [SwaggerOperation("Realizar login")]
+    [SwaggerResponse(StatusCodes.Status200OK, "Autenticação bem sucedida, token gerado", typeof(SignInResponse))]
+    [SwaggerResponse(StatusCodes.Status206PartialContent, "Obrigatório autenticação de dois fatores")]
+    [SwaggerResponse(StatusCodes.Status401Unauthorized, "E-mail ou senha incorreto")]
+    [SwaggerResponse(StatusCodes.Status422UnprocessableEntity, "E-mail não confirmado")]
+    [SwaggerResponse(StatusCodes.Status404NotFound, "E-mail não encontrado")]
     public async Task<IResult> SignIn([FromBody] SignIn model)
     {
         try
@@ -45,6 +53,10 @@ public class AuthenticationV1Controller : Controller
     }
 
     [HttpPost("sign-up")]
+    [SwaggerOperation("Cadastro no sistema")]
+    [SwaggerResponse(StatusCodes.Status201Created, "Cadastro realizado")]
+    [SwaggerResponse(StatusCodes.Status404NotFound, "E-mail não encontrado")]
+    [SwaggerResponse(StatusCodes.Status400BadRequest, "Senha deve conter 6 caracteres.| Senha deve conter 1 caractere especial. | Senha deve conter alphanumérico. | Erro levantado pelo ASP.NET Identity (username em uso) ETC.")]
     public async Task<IResult> SignUp([FromBody] CreateUser model)
     {
         try
@@ -66,6 +78,9 @@ public class AuthenticationV1Controller : Controller
     }
 
     [HttpGet("forget/password")]
+    [SwaggerOperation("Solicita cadastro de nova senha")]
+    [SwaggerResponse(StatusCodes.Status200OK, "Link para alteração de senha enviado por e-mail")]
+    [SwaggerResponse(StatusCodes.Status404NotFound, "E-mail não encontrado")]
     public async Task<IResult> ForgetPassword([FromHeader] string email)
     {
         try
@@ -91,6 +106,10 @@ public class AuthenticationV1Controller : Controller
     }
 
     [HttpPost("validate/password/change")]
+    [SwaggerOperation("Valida alteração da senha")]
+    [SwaggerResponse(StatusCodes.Status200OK, "Senha alterada com sucesso")]
+    [SwaggerResponse(StatusCodes.Status400BadRequest, "Token inválido. | Senha não corresponde ao padrão")]
+    [SwaggerResponse(StatusCodes.Status404NotFound, "E-mail não encontrado")]
     public async Task<IResult> ValidateForgetPassword([FromBody] ResetPassword model, [FromQuery] string token)
     {
         try
