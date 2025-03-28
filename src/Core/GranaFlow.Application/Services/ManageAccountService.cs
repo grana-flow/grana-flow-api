@@ -10,6 +10,7 @@ using GranaFlow.Domain.Exceptions;
 using GranaFlow.Domain.Interfaces;
 using RabbitMQServer.contracts;
 using RabbitMQServer.interfaces;
+using GranaFlow.Application.JwtTokens;
 
 namespace GranaFlow.Application.Services;
 
@@ -129,16 +130,17 @@ public class ManageAccountService : IManageAccountService
                 )
             );
 
+            var accessToken = TokenService.GenerateAccessToken(_configuration, user);
+            var authToken = new AuthTokenResponse(
+                accessToken: accessToken,
+                refreshToken: TokenService.GenerateRefreshToken(_configuration, accessToken),
+                expiration: DateTime.UtcNow.AddMinutes(int.Parse(_configuration["JwtSettings:TokenExpirationMinutes"]!)));
             return new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.PartialContent,
                 Content = new StringContent(
                     JsonSerializer.Serialize(
-                        new
-                        {
-                            requires2FA = true,
-                            message = "Two-step verification code sent to your email."
-                        }
+                        authToken
                     ),
                     System.Text.Encoding.UTF8,
                     "application/json"
@@ -146,6 +148,7 @@ public class ManageAccountService : IManageAccountService
             };
         }
 
+        
         return new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.OK,

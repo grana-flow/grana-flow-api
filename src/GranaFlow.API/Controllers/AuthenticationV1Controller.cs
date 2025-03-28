@@ -24,7 +24,7 @@ public class AuthenticationV1Controller : Controller
 
     [HttpPost("sign-in")]
     [SwaggerOperation("Realizar login")]
-    [SwaggerResponse(StatusCodes.Status200OK, "Autenticação bem sucedida, token gerado", typeof(SignInResponse))]
+    [SwaggerResponse(StatusCodes.Status200OK, "Autenticação bem sucedida, tokens gerados", typeof(AuthTokenResponse))]
     [SwaggerResponse(StatusCodes.Status206PartialContent, "Obrigatório autenticação de dois fatores")]
     [SwaggerResponse(StatusCodes.Status401Unauthorized, "E-mail ou senha incorreto")]
     [SwaggerResponse(StatusCodes.Status422UnprocessableEntity, "E-mail não confirmado")]
