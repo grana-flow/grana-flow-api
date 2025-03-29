@@ -130,17 +130,16 @@ public class ManageAccountService : IManageAccountService
                 )
             );
 
-            var accessToken = TokenService.GenerateAccessToken(_configuration, user);
-            var authToken = new AuthTokenResponse(
-                accessToken: accessToken,
-                refreshToken: TokenService.GenerateRefreshToken(_configuration, accessToken),
-                expiration: DateTime.UtcNow.AddMinutes(int.Parse(_configuration["JwtSettings:TokenExpirationMinutes"]!)));
             return new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.PartialContent,
                 Content = new StringContent(
                     JsonSerializer.Serialize(
-                        authToken
+                        new
+                        {
+                            requires2FA = true,
+                            message = "Two-step verification code sent to your email."
+                        }
                     ),
                     System.Text.Encoding.UTF8,
                     "application/json"
@@ -148,12 +147,12 @@ public class ManageAccountService : IManageAccountService
             };
         }
 
-        
+        var authTokens = await GenerateAccessTokens(user);
         return new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.OK,
             Content = new StringContent(
-                JsonSerializer.Serialize(new { message = "Generate token." }),
+                JsonSerializer.Serialize(authTokens),
                 System.Text.Encoding.UTF8,
                 "application/json"
             )
@@ -226,15 +225,21 @@ public class ManageAccountService : IManageAccountService
                 StatusCode = HttpStatusCode.Unauthorized
             };
 
-        // TODO: gerar token JWT
         if (!user!.TwoFactorEnabled)
+        {
             await _repository.EnableTwoFactor(user, true);
+            return new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.OK
+            };
+        }
 
+        var authTokens = await GenerateAccessTokens(user);
         return new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.OK,
             Content = new StringContent(
-                JsonSerializer.Serialize(new { message = "token gerado." }),
+                JsonSerializer.Serialize(authTokens),
                 System.Text.Encoding.UTF8,
                 "application/json"
             )
@@ -303,5 +308,16 @@ public class ManageAccountService : IManageAccountService
                 "application/json"
             )
         };
+    }
+
+    private async Task<AuthTokenResponse> GenerateAccessTokens(User user)
+    {
+        var accessToken = TokenService.GenerateAccessToken(_configuration, user);
+        var authToken = new AuthTokenResponse(
+            accessToken: accessToken,
+            refreshToken: TokenService.GenerateRefreshToken(_configuration, accessToken),
+            expiration: DateTime.UtcNow.AddMinutes(int.Parse(_configuration["JwtSettings:TokenExpirationMinutes"]!)));
+        await _repository.SetAuthenticationToken(user, _configuration["JwtSettings:RefreshToken:LoginProvaider"]!, _configuration["JwtSettings:RefreshToken:Name"]!, authToken.RefreshToken);
+        return authToken;
     }
 }

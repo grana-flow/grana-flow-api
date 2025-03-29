@@ -80,4 +80,9 @@ public class ManageAccountRepository : IManageAccountRepository
     {
         await _userManager.SetTwoFactorEnabledAsync(user, status);
     }
+
+    public async Task SetAuthenticationToken(User user, string loginProvaider, string tokenName, string tokenValue)
+    {
+        await _userManager.SetAuthenticationTokenAsync(user, loginProvaider, tokenName, tokenValue);
+    }
 }

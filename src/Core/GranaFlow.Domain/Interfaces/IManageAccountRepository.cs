@@ -17,4 +17,5 @@ public interface IManageAccountRepository
     Task<bool> VerifyTwoFactorToken(User user, string provaider, string token);
     Task<IdentityResult> ValidateResetPassword(User user, string token, string newPassword);
     Task EnableTwoFactor(User user, bool status);
+    Task SetAuthenticationToken(User user, string loginProvaider, string tokenName, string tokenValue);
 }
