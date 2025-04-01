@@ -310,6 +310,26 @@ public class ManageAccountService : IManageAccountService
         };
     }
 
+    public async Task<HttpResponseMessage> VerifyRefreshToken(RefreshToken model)
+    {
+        var user = await _repository.FindByEmail(model.Email);
+        var isValid = await _repository.VerifyUserToken(user, _configuration["JwtSettings:RefreshToken:LoginProvaider"]!, _configuration["JwtSettings:RefreshToken:Name"]!, model.Refresh);
+
+        if (!isValid)
+            return new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest };
+
+        var authTokens = await GenerateAccessTokens(user);
+        return new HttpResponseMessage
+        {
+            StatusCode = HttpStatusCode.OK,
+            Content = new StringContent(
+                JsonSerializer.Serialize(authTokens),
+                System.Text.Encoding.UTF8,
+                "application/json"
+            )
+        };
+    }
+
     private async Task<AuthTokenResponse> GenerateAccessTokens(User user)
     {
         var accessToken = TokenService.GenerateAccessToken(_configuration, user);

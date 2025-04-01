@@ -85,4 +85,10 @@ public class ManageAccountRepository : IManageAccountRepository
     {
         await _userManager.SetAuthenticationTokenAsync(user, loginProvaider, tokenName, tokenValue);
     }
+
+    public async Task<bool> VerifyUserToken(User user, string loginProvaider, string tokenName, string tokenValue)
+    {
+        var storedToken = await _userManager.GetAuthenticationTokenAsync(user, loginProvaider, tokenName);
+        return string.IsNullOrEmpty(storedToken) ? false : storedToken!.Equals(tokenValue);
+    }
 }

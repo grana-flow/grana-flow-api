@@ -132,4 +132,28 @@ public class AuthenticationV1Controller : Controller
             return Results.BadRequest(new { message = ex.Message });
         }
     }
+
+    [HttpPost("refresh")]
+    [SwaggerOperation("Solicita novo AccessToken com base em um RefreshToken")]
+    [SwaggerResponse(StatusCodes.Status200OK, "Token válido, novos tokens gerados", typeof(AuthTokenResponse))]
+    [SwaggerResponse(StatusCodes.Status400BadRequest, "Refresh token inválido")]
+    [SwaggerResponse(StatusCodes.Status404NotFound, "E-mail não encontrado")]
+    public async Task<IResult> Refresh([FromBody] RefreshToken model)
+    {
+        try
+        {
+            var resultRefreshToken = await _service.VerifyRefreshToken(model);
+
+            return Results.Content(
+                await resultRefreshToken.Content.ReadAsStringAsync(),
+                "application/json",
+                Encoding.UTF8,
+                (int)resultRefreshToken.StatusCode
+            );
+        }
+        catch (EmailNotFoundException ex)
+        {
+            return Results.NotFound(new { message = ex.Message });
+        }
+    }
 }
