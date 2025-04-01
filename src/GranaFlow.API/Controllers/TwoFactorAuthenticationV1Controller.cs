@@ -79,7 +79,7 @@ public class TwoFactorAuthenticationV1Controller : Controller
 
     [HttpPost("verify/token")]
     [SwaggerOperation("Valida código de auth 2 fatores")]
-    [SwaggerResponse(StatusCodes.Status200OK, "Token gerado", typeof(SignInResponse))]
+    [SwaggerResponse(StatusCodes.Status200OK, "Token gerado", typeof(AuthTokenResponse))]
     [SwaggerResponse(StatusCodes.Status401Unauthorized, "Token inválido")]
     [SwaggerResponse(StatusCodes.Status404NotFound, "E-mail não encontrado")]
     public async Task<IResult> ValidateTwoFactorToken([FromBody] ValidateTwoFactorAuthentication model)

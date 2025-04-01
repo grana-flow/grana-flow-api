@@ -13,6 +13,9 @@ using GranaFlow.Infra.Data.Repository;
 using GranaFlow.Infra.Ioc.DependencyInjection.Base;
 using RabbitMQServer.interfaces;
 using RabbitMQServer.services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace GranaFlow.Infra.Ioc.DependencyInjection
 {
@@ -65,6 +68,28 @@ namespace GranaFlow.Infra.Ioc.DependencyInjection
                 {
                     options.GroupNameFormat = "'v'V";
                     options.SubstituteApiVersionInUrl = true;
+                });
+        }
+
+        public void AddConfigAuthentication()
+        {
+            _serviceCollection!.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = _configuration!.GetSection("JwtSettings").GetSection("Issuer").Value,
+                        ValidAudience = _configuration!.GetSection("JwtSettings").GetSection("Audience").Value,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration!.GetSection("JwtSettings").GetSection("SecretKey").Value!))
+                    };
                 });
         }
     }

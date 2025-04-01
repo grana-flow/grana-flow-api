@@ -25,6 +25,8 @@ builder
 
 structureDependencies.ConfigurePasswordRules();
 
+structureDependencies.AddConfigAuthentication();
+
 builder.Services.AddAuthorization();
 
 // Add services to the container.

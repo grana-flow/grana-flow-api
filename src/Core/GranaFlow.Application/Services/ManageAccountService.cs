@@ -10,6 +10,7 @@ using GranaFlow.Domain.Exceptions;
 using GranaFlow.Domain.Interfaces;
 using RabbitMQServer.contracts;
 using RabbitMQServer.interfaces;
+using GranaFlow.Application.JwtTokens;
 
 namespace GranaFlow.Application.Services;
 
@@ -146,11 +147,12 @@ public class ManageAccountService : IManageAccountService
             };
         }
 
+        var authTokens = await GenerateAccessTokens(user);
         return new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.OK,
             Content = new StringContent(
-                JsonSerializer.Serialize(new { message = "Generate token." }),
+                JsonSerializer.Serialize(authTokens),
                 System.Text.Encoding.UTF8,
                 "application/json"
             )
@@ -223,15 +225,21 @@ public class ManageAccountService : IManageAccountService
                 StatusCode = HttpStatusCode.Unauthorized
             };
 
-        // TODO: gerar token JWT
         if (!user!.TwoFactorEnabled)
+        {
             await _repository.EnableTwoFactor(user, true);
+            return new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.OK
+            };
+        }
 
+        var authTokens = await GenerateAccessTokens(user);
         return new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.OK,
             Content = new StringContent(
-                JsonSerializer.Serialize(new { message = "token gerado." }),
+                JsonSerializer.Serialize(authTokens),
                 System.Text.Encoding.UTF8,
                 "application/json"
             )
@@ -300,5 +308,36 @@ public class ManageAccountService : IManageAccountService
                 "application/json"
             )
         };
+    }
+
+    public async Task<HttpResponseMessage> VerifyRefreshToken(RefreshToken model)
+    {
+        var user = await _repository.FindByEmail(model.Email);
+        var isValid = await _repository.VerifyUserToken(user!, _configuration["JwtSettings:RefreshToken:LoginProvaider"]!, _configuration["JwtSettings:RefreshToken:Name"]!, model.Refresh);
+
+        if (!isValid)
+            return new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest };
+
+        var authTokens = await GenerateAccessTokens(user!);
+        return new HttpResponseMessage
+        {
+            StatusCode = HttpStatusCode.OK,
+            Content = new StringContent(
+                JsonSerializer.Serialize(authTokens),
+                System.Text.Encoding.UTF8,
+                "application/json"
+            )
+        };
+    }
+
+    private async Task<AuthTokenResponse> GenerateAccessTokens(User user)
+    {
+        var accessToken = TokenService.GenerateAccessToken(_configuration, user);
+        var authToken = new AuthTokenResponse(
+            accessToken: accessToken,
+            refreshToken: TokenService.GenerateRefreshToken(_configuration, user),
+            expiration: DateTime.UtcNow.AddMinutes(int.Parse(_configuration["JwtSettings:TokenExpirationMinutes"]!)));
+        await _repository.SetAuthenticationToken(user, _configuration["JwtSettings:RefreshToken:LoginProvaider"]!, _configuration["JwtSettings:RefreshToken:Name"]!, authToken.RefreshToken);
+        return authToken;
     }
 }

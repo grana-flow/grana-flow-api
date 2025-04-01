@@ -11,4 +11,5 @@ public interface IManageAccountService
     Task<HttpResponseMessage> ValidateTwoFactorToken(ValidateTwoFactorAuthentication model);
     Task<HttpResponseMessage> RequestForgetPassword(string email, string endpointPathToVerifyReset);
     Task<HttpResponseMessage> ValidateForgetPassword(ResetPassword model, string token);
+    Task<HttpResponseMessage> VerifyRefreshToken(RefreshToken model);
 }
