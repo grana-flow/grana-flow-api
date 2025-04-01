@@ -28,15 +28,24 @@ public static class TokenService
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 
-    public static string GenerateRefreshToken(IConfiguration configs, string accessToken)
+    public static string GenerateRefreshToken(IConfiguration configs, User user)
     {
-        var secretKey = configs["JwtSettings:RefreshToken:SecretKey"];
+        var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configs["JwtSettings:RefreshToken:SecretKey"]!));
+        var creds = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
-        using (var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(accessToken)))
-        {
-            var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(accessToken));
-            return Convert.ToBase64String(hash);
-        }
+        var refreshTokenHandler = new JwtSecurityTokenHandler();
+        var refreshToken = new JwtSecurityToken(
+            issuer: configs["JwtSettings:Issuer"],
+            audience: configs["JwtSettings:Audience"],
+            claims: new List<Claim>
+            {
+                new Claim(JwtRegisteredClaimNames.NameId, user.Id),
+                new Claim(JwtRegisteredClaimNames.Email, user.Email!),
+                new Claim("token_type", configs["JwtSettings:RefreshToken:Name"]!)
+            },
+            expires: DateTime.UtcNow.AddDays(int.Parse(configs["JwtSettings:RefreshToken:TokenExpirationInDays"]!)),
+            signingCredentials: creds);
+        return refreshTokenHandler.WriteToken(refreshToken);
     }
 
     private static Claim[] SetClaims(User user)

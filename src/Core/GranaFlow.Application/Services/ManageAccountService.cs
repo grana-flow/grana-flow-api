@@ -313,12 +313,12 @@ public class ManageAccountService : IManageAccountService
     public async Task<HttpResponseMessage> VerifyRefreshToken(RefreshToken model)
     {
         var user = await _repository.FindByEmail(model.Email);
-        var isValid = await _repository.VerifyUserToken(user, _configuration["JwtSettings:RefreshToken:LoginProvaider"]!, _configuration["JwtSettings:RefreshToken:Name"]!, model.Refresh);
+        var isValid = await _repository.VerifyUserToken(user!, _configuration["JwtSettings:RefreshToken:LoginProvaider"]!, _configuration["JwtSettings:RefreshToken:Name"]!, model.Refresh);
 
         if (!isValid)
             return new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest };
 
-        var authTokens = await GenerateAccessTokens(user);
+        var authTokens = await GenerateAccessTokens(user!);
         return new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.OK,
@@ -335,7 +335,7 @@ public class ManageAccountService : IManageAccountService
         var accessToken = TokenService.GenerateAccessToken(_configuration, user);
         var authToken = new AuthTokenResponse(
             accessToken: accessToken,
-            refreshToken: TokenService.GenerateRefreshToken(_configuration, accessToken),
+            refreshToken: TokenService.GenerateRefreshToken(_configuration, user),
             expiration: DateTime.UtcNow.AddMinutes(int.Parse(_configuration["JwtSettings:TokenExpirationMinutes"]!)));
         await _repository.SetAuthenticationToken(user, _configuration["JwtSettings:RefreshToken:LoginProvaider"]!, _configuration["JwtSettings:RefreshToken:Name"]!, authToken.RefreshToken);
         return authToken;
