@@ -2,15 +2,15 @@
 using System.Text.Json;
 using EmailServices.Contracts;
 using EmailServices.Utils;
-using Microsoft.Extensions.Configuration;
 using GranaFlow.Application.Interfaces;
+using GranaFlow.Application.JwtTokens;
 using GranaFlow.Domain.Contracts;
 using GranaFlow.Domain.Entities;
 using GranaFlow.Domain.Exceptions;
 using GranaFlow.Domain.Interfaces;
+using Microsoft.Extensions.Configuration;
 using RabbitMQServer.contracts;
 using RabbitMQServer.interfaces;
-using GranaFlow.Application.JwtTokens;
 
 namespace GranaFlow.Application.Services;
 
@@ -71,10 +71,7 @@ public class ManageAccountService : IManageAccountService
                 )
             );
 
-            return new HttpResponseMessage
-            {
-                StatusCode = HttpStatusCode.Created
-            };
+            return new HttpResponseMessage { StatusCode = HttpStatusCode.Created };
         }
         return new HttpResponseMessage
         {
@@ -94,16 +91,10 @@ public class ManageAccountService : IManageAccountService
         var user = await _repository.FindByEmail(model.Email);
 
         if (!user!.EmailConfirmed)
-            return new HttpResponseMessage
-            {
-                StatusCode = HttpStatusCode.UnprocessableEntity
-            };
+            return new HttpResponseMessage { StatusCode = HttpStatusCode.UnprocessableEntity };
 
         if (!await _repository.CheckPassword(user, model.Password))
-            return new HttpResponseMessage
-            {
-                StatusCode = HttpStatusCode.Unauthorized
-            };
+            return new HttpResponseMessage { StatusCode = HttpStatusCode.Unauthorized };
 
         if (user.TwoFactorEnabled)
         {
@@ -177,10 +168,7 @@ public class ManageAccountService : IManageAccountService
                 )
             };
 
-        return new HttpResponseMessage
-        {
-            StatusCode = HttpStatusCode.OK
-        };
+        return new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
     }
 
     public async Task<HttpResponseMessage> GenerateTwoFactorToken(string email)
@@ -208,30 +196,23 @@ public class ManageAccountService : IManageAccountService
             )
         );
 
-        return new HttpResponseMessage
-        {
-            StatusCode = HttpStatusCode.OK
-        };
+        return new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
     }
 
-    public async Task<HttpResponseMessage> ValidateTwoFactorToken(ValidateTwoFactorAuthentication model)
+    public async Task<HttpResponseMessage> ValidateTwoFactorToken(
+        ValidateTwoFactorAuthentication model
+    )
     {
         var user = await _repository.FindByEmail(model.Email);
 
         var isValid = await _repository.VerifyTwoFactorToken(user!, "Email", model.Token);
         if (!isValid)
-            return new HttpResponseMessage
-            {
-                StatusCode = HttpStatusCode.Unauthorized
-            };
+            return new HttpResponseMessage { StatusCode = HttpStatusCode.Unauthorized };
 
         if (!user!.TwoFactorEnabled)
         {
             await _repository.EnableTwoFactor(user, true);
-            return new HttpResponseMessage
-            {
-                StatusCode = HttpStatusCode.OK
-            };
+            return new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
         }
 
         var authTokens = await GenerateAccessTokens(user);
@@ -275,10 +256,7 @@ public class ManageAccountService : IManageAccountService
             )
         );
 
-        return new HttpResponseMessage
-        {
-            StatusCode = HttpStatusCode.OK
-        };
+        return new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
     }
 
     public async Task<HttpResponseMessage> ValidateForgetPassword(ResetPassword model, string token)
@@ -292,10 +270,7 @@ public class ManageAccountService : IManageAccountService
         );
 
         if (resetPasswordResult.Succeeded)
-            return new HttpResponseMessage
-            {
-                StatusCode = HttpStatusCode.OK
-            };
+            return new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
 
         return new HttpResponseMessage
         {
@@ -313,7 +288,12 @@ public class ManageAccountService : IManageAccountService
     public async Task<HttpResponseMessage> VerifyRefreshToken(RefreshToken model)
     {
         var user = await _repository.FindByEmail(model.Email);
-        var isValid = await _repository.VerifyUserToken(user!, _configuration["JwtSettings:RefreshToken:LoginProvaider"]!, _configuration["JwtSettings:RefreshToken:Name"]!, model.Refresh);
+        var isValid = await _repository.VerifyUserToken(
+            user!,
+            _configuration["JwtSettings:RefreshToken:LoginProvaider"]!,
+            _configuration["JwtSettings:RefreshToken:Name"]!,
+            model.Refresh
+        );
 
         if (!isValid)
             return new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest };
@@ -336,8 +316,16 @@ public class ManageAccountService : IManageAccountService
         var authToken = new AuthTokenResponse(
             accessToken: accessToken,
             refreshToken: TokenService.GenerateRefreshToken(_configuration, user),
-            expiration: DateTime.UtcNow.AddMinutes(int.Parse(_configuration["JwtSettings:TokenExpirationMinutes"]!)));
-        await _repository.SetAuthenticationToken(user, _configuration["JwtSettings:RefreshToken:LoginProvaider"]!, _configuration["JwtSettings:RefreshToken:Name"]!, authToken.RefreshToken);
+            expiration: DateTime.UtcNow.AddMinutes(
+                int.Parse(_configuration["JwtSettings:TokenExpirationMinutes"]!)
+            )
+        );
+        await _repository.SetAuthenticationToken(
+            user,
+            _configuration["JwtSettings:RefreshToken:LoginProvaider"]!,
+            _configuration["JwtSettings:RefreshToken:Name"]!,
+            authToken.RefreshToken
+        );
         return authToken;
     }
 }

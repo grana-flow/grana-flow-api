@@ -49,10 +49,7 @@ public static class TwoFactorAuthenticationEndpoints
                                 }
                             }
                         },
-                        ["404"] = new OpenApiResponse
-                        {
-                            Description = "E-mail nbot found"
-                        },
+                        ["404"] = new OpenApiResponse { Description = "E-mail nbot found" },
                         ["400"] = new OpenApiResponse
                         {
                             Description = "Possible reasons:\n- Invalid e-mail\n- Invalid token"

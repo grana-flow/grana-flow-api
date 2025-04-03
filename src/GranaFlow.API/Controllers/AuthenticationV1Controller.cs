@@ -1,11 +1,11 @@
-﻿using Asp.Versioning;
-using Microsoft.AspNetCore.Mvc;
+﻿using System.Text;
+using Asp.Versioning;
 using GranaFlow.Application.Interfaces;
 using GranaFlow.Domain.Contracts;
 using GranaFlow.Domain.Exceptions;
-using System.Text;
-using Swashbuckle.AspNetCore.Annotations;
 using GranaFlow.Infra.Ioc.Configs.Swagger.ExampleResponse;
+using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace GranaFlow.API.Controllers;
 
@@ -24,8 +24,15 @@ public class AuthenticationV1Controller : Controller
 
     [HttpPost("sign-in")]
     [SwaggerOperation("Realizar login")]
-    [SwaggerResponse(StatusCodes.Status200OK, "Autenticação bem sucedida, tokens gerados", typeof(AuthTokenResponse))]
-    [SwaggerResponse(StatusCodes.Status206PartialContent, "Obrigatório autenticação de dois fatores")]
+    [SwaggerResponse(
+        StatusCodes.Status200OK,
+        "Autenticação bem sucedida, tokens gerados",
+        typeof(AuthTokenResponse)
+    )]
+    [SwaggerResponse(
+        StatusCodes.Status206PartialContent,
+        "Obrigatório autenticação de dois fatores"
+    )]
     [SwaggerResponse(StatusCodes.Status401Unauthorized, "E-mail ou senha incorreto")]
     [SwaggerResponse(StatusCodes.Status422UnprocessableEntity, "E-mail não confirmado")]
     [SwaggerResponse(StatusCodes.Status404NotFound, "E-mail não encontrado")]
@@ -56,13 +63,16 @@ public class AuthenticationV1Controller : Controller
     [SwaggerOperation("Cadastro no sistema")]
     [SwaggerResponse(StatusCodes.Status201Created, "Cadastro realizado")]
     [SwaggerResponse(StatusCodes.Status404NotFound, "E-mail não encontrado")]
-    [SwaggerResponse(StatusCodes.Status400BadRequest, "Senha deve conter 6 caracteres.| Senha deve conter 1 caractere especial. | Senha deve conter alphanumérico. | Erro levantado pelo ASP.NET Identity (username em uso) ETC.")]
+    [SwaggerResponse(
+        StatusCodes.Status400BadRequest,
+        "Senha deve conter 6 caracteres.| Senha deve conter 1 caractere especial. | Senha deve conter alphanumérico. | Erro levantado pelo ASP.NET Identity (username em uso) ETC."
+    )]
     public async Task<IResult> SignUp([FromBody] CreateUser model)
     {
         try
         {
             var baseUrl =
-            $"{Request.Scheme}://{Request.Host}{Request.PathBase}/api/v1/2FA/verify/email";
+                $"{Request.Scheme}://{Request.Host}{Request.PathBase}/api/v1/2FA/verify/email";
             var registeredUser = await _service.CreateAccount(model, baseUrl);
             return Results.Content(
                 await registeredUser.Content.ReadAsStringAsync(),
@@ -86,10 +96,10 @@ public class AuthenticationV1Controller : Controller
         try
         {
             var baseUrl =
-            $"{Request.Scheme} :// {Request.Host} {Request.PathBase}/api/v1/auth/validate/password/change";
+                $"{Request.Scheme} :// {Request.Host} {Request.PathBase}/api/v1/auth/validate/password/change";
             var forgetPassword = await _service.RequestForgetPassword(email, baseUrl);
             return Results.Content(
-            await forgetPassword.Content.ReadAsStringAsync(),
+                await forgetPassword.Content.ReadAsStringAsync(),
                 "application/json",
                 Encoding.UTF8,
                 (int)forgetPassword.StatusCode
@@ -108,9 +118,15 @@ public class AuthenticationV1Controller : Controller
     [HttpPost("validate/password/change")]
     [SwaggerOperation("Valida alteração da senha")]
     [SwaggerResponse(StatusCodes.Status200OK, "Senha alterada com sucesso")]
-    [SwaggerResponse(StatusCodes.Status400BadRequest, "Token inválido. | Senha não corresponde ao padrão")]
+    [SwaggerResponse(
+        StatusCodes.Status400BadRequest,
+        "Token inválido. | Senha não corresponde ao padrão"
+    )]
     [SwaggerResponse(StatusCodes.Status404NotFound, "E-mail não encontrado")]
-    public async Task<IResult> ValidateForgetPassword([FromBody] ResetPassword model, [FromQuery] string token)
+    public async Task<IResult> ValidateForgetPassword(
+        [FromBody] ResetPassword model,
+        [FromQuery] string token
+    )
     {
         try
         {
@@ -135,7 +151,11 @@ public class AuthenticationV1Controller : Controller
 
     [HttpPost("refresh")]
     [SwaggerOperation("Solicita novo AccessToken com base em um RefreshToken")]
-    [SwaggerResponse(StatusCodes.Status200OK, "Token válido, novos tokens gerados", typeof(AuthTokenResponse))]
+    [SwaggerResponse(
+        StatusCodes.Status200OK,
+        "Token válido, novos tokens gerados",
+        typeof(AuthTokenResponse)
+    )]
     [SwaggerResponse(StatusCodes.Status400BadRequest, "Refresh token inválido")]
     [SwaggerResponse(StatusCodes.Status404NotFound, "E-mail não encontrado")]
     public async Task<IResult> Refresh([FromBody] RefreshToken model)

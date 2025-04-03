@@ -1,8 +1,8 @@
 ﻿using System.Web;
-using Microsoft.AspNetCore.Identity;
 using GranaFlow.Domain.Entities;
 using GranaFlow.Domain.Exceptions;
 using GranaFlow.Domain.Interfaces;
+using Microsoft.AspNetCore.Identity;
 
 namespace GranaFlow.Infra.Data.Repository;
 
@@ -22,8 +22,7 @@ public class ManageAccountRepository : IManageAccountRepository
 
     public async Task<User?> FindByEmail(string email)
     {
-        return await _userManager.FindByEmailAsync(email)
-            ?? throw new EmailNotFoundException();
+        return await _userManager.FindByEmailAsync(email) ?? throw new EmailNotFoundException();
     }
 
     public async Task<bool> IsEmailConfirmed(User user)
@@ -81,14 +80,28 @@ public class ManageAccountRepository : IManageAccountRepository
         await _userManager.SetTwoFactorEnabledAsync(user, status);
     }
 
-    public async Task SetAuthenticationToken(User user, string loginProvaider, string tokenName, string tokenValue)
+    public async Task SetAuthenticationToken(
+        User user,
+        string loginProvaider,
+        string tokenName,
+        string tokenValue
+    )
     {
         await _userManager.SetAuthenticationTokenAsync(user, loginProvaider, tokenName, tokenValue);
     }
 
-    public async Task<bool> VerifyUserToken(User user, string loginProvaider, string tokenName, string tokenValue)
+    public async Task<bool> VerifyUserToken(
+        User user,
+        string loginProvaider,
+        string tokenName,
+        string tokenValue
+    )
     {
-        var storedToken = await _userManager.GetAuthenticationTokenAsync(user, loginProvaider, tokenName);
+        var storedToken = await _userManager.GetAuthenticationTokenAsync(
+            user,
+            loginProvaider,
+            tokenName
+        );
         return string.IsNullOrEmpty(storedToken) ? false : storedToken!.Equals(tokenValue);
     }
 }

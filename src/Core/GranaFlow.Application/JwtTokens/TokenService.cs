@@ -1,10 +1,10 @@
-﻿using GranaFlow.Domain.Entities;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using GranaFlow.Domain.Entities;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 
 namespace GranaFlow.Application.JwtTokens;
 
@@ -23,14 +23,17 @@ public static class TokenService
             audience: credentials.Audience,
             claims: claims,
             expires: credentials.ExpirationInMinutes,
-            signingCredentials: signinCredentials);
+            signingCredentials: signinCredentials
+        );
 
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 
     public static string GenerateRefreshToken(IConfiguration configs, User user)
     {
-        var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configs["JwtSettings:RefreshToken:SecretKey"]!));
+        var secretKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(configs["JwtSettings:RefreshToken:SecretKey"]!)
+        );
         var creds = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
         var refreshTokenHandler = new JwtSecurityTokenHandler();
@@ -43,8 +46,11 @@ public static class TokenService
                 new Claim(JwtRegisteredClaimNames.Email, user.Email!),
                 new Claim("token_type", configs["JwtSettings:RefreshToken:Name"]!)
             },
-            expires: DateTime.UtcNow.AddDays(int.Parse(configs["JwtSettings:RefreshToken:TokenExpirationInDays"]!)),
-            signingCredentials: creds);
+            expires: DateTime.UtcNow.AddDays(
+                int.Parse(configs["JwtSettings:RefreshToken:TokenExpirationInDays"]!)
+            ),
+            signingCredentials: creds
+        );
         return refreshTokenHandler.WriteToken(refreshToken);
     }
 
@@ -66,6 +72,11 @@ public static class TokenService
         var audience = configs["JwtSettings:Audience"];
         var expirationInMinutes = configs["JwtSettings:TokenExpirationMinutes"];
 
-        return new Credentials(secretKey!, DateTime.UtcNow.AddMinutes(int.Parse(expirationInMinutes!)), issuer!, audience!);
+        return new Credentials(
+            secretKey!,
+            DateTime.UtcNow.AddMinutes(int.Parse(expirationInMinutes!)),
+            issuer!,
+            audience!
+        );
     }
 }

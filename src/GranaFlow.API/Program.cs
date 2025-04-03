@@ -1,8 +1,8 @@
-using Microsoft.AspNetCore.Identity;
 using GranaFlow.Domain.Entities;
 using GranaFlow.Infra.Data.Context;
 using GranaFlow.Infra.Ioc.Configs.Swagger;
 using GranaFlow.Infra.Ioc.DependencyInjection;
+using Microsoft.AspNetCore.Identity;
 using RabbitMQServer.services;
 
 var builder = WebApplication.CreateBuilder(args);

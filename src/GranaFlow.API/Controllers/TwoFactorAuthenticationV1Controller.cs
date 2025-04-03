@@ -1,10 +1,10 @@
-﻿using Asp.Versioning;
-using Microsoft.AspNetCore.Mvc;
+﻿using System.Text;
+using Asp.Versioning;
 using GranaFlow.Application.Interfaces;
 using GranaFlow.Domain.Contracts;
 using GranaFlow.Domain.Exceptions;
-using System.Text;
 using GranaFlow.Infra.Ioc.Configs.Swagger.ExampleResponse;
+using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace GranaFlow.API.Controllers;
@@ -82,7 +82,9 @@ public class TwoFactorAuthenticationV1Controller : Controller
     [SwaggerResponse(StatusCodes.Status200OK, "Token gerado", typeof(AuthTokenResponse))]
     [SwaggerResponse(StatusCodes.Status401Unauthorized, "Token inválido")]
     [SwaggerResponse(StatusCodes.Status404NotFound, "E-mail não encontrado")]
-    public async Task<IResult> ValidateTwoFactorToken([FromBody] ValidateTwoFactorAuthentication model)
+    public async Task<IResult> ValidateTwoFactorToken(
+        [FromBody] ValidateTwoFactorAuthentication model
+    )
     {
         try
         {

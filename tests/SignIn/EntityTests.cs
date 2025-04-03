@@ -1,5 +1,5 @@
-﻿using GranaFlow.Domain.Contracts;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using GranaFlow.Domain.Contracts;
 
 namespace tests.SignIn;
 

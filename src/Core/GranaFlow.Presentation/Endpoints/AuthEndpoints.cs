@@ -32,11 +32,7 @@ public static class AuthEndpoints
                         {
                             Description = "Two-factor authentication required"
                         },
-                        ["404"] = new OpenApiResponse
-                        {
-                            Description =
-                                "E-mail nor found"
-                        },
+                        ["404"] = new OpenApiResponse { Description = "E-mail nor found" },
                         ["400"] = new OpenApiResponse
                         {
                             Description =
@@ -81,7 +77,8 @@ public static class AuthEndpoints
                         },
                         ["400"] = new OpenApiResponse
                         {
-                            Description = "Possible reasons:\n- E-mail already registered\n- Username already registered",
+                            Description =
+                                "Possible reasons:\n- E-mail already registered\n- Username already registered",
                             Content =
                             {
                                 ["application/json"] = new OpenApiMediaType
@@ -139,11 +136,7 @@ public static class AuthEndpoints
                                 }
                             }
                         },
-                        ["404"] = new OpenApiResponse
-                        {
-                            Description =
-                                "E-mail not found"
-                        },
+                        ["404"] = new OpenApiResponse { Description = "E-mail not found" },
                     }
                 };
             });
@@ -182,11 +175,7 @@ public static class AuthEndpoints
                                 }
                             }
                         },
-                        ["404"] = new OpenApiResponse
-                        {
-                            Description =
-                                "E-mail not found"
-                        },
+                        ["404"] = new OpenApiResponse { Description = "E-mail not found" },
                         ["400"] = new OpenApiResponse
                         {
                             Description =

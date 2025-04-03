@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Identity;
-using Moq;
 using GranaFlow.Domain.Contracts;
 using GranaFlow.Domain.Entities;
 using GranaFlow.Domain.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using Moq;
 
 namespace tests;
 

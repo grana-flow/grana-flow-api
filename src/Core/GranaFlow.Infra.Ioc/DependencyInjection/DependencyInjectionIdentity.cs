@@ -1,21 +1,21 @@
-﻿using Asp.Versioning;
+﻿using System.Text;
+using Asp.Versioning;
 using EmailServices.Interface;
 using EmailServices.Service;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using GranaFlow.Application.Interfaces;
 using GranaFlow.Application.Services;
 using GranaFlow.Domain.Interfaces;
 using GranaFlow.Infra.Data.Context;
 using GranaFlow.Infra.Data.Repository;
 using GranaFlow.Infra.Ioc.DependencyInjection.Base;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using RabbitMQServer.interfaces;
 using RabbitMQServer.services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 
 namespace GranaFlow.Infra.Ioc.DependencyInjection
 {
@@ -73,11 +73,12 @@ namespace GranaFlow.Infra.Ioc.DependencyInjection
 
         public void AddConfigAuthentication()
         {
-            _serviceCollection!.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
+            _serviceCollection!
+                .AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
                 .AddJwtBearer(options =>
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
@@ -86,9 +87,22 @@ namespace GranaFlow.Infra.Ioc.DependencyInjection
                         ValidateAudience = true,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
-                        ValidIssuer = _configuration!.GetSection("JwtSettings").GetSection("Issuer").Value,
-                        ValidAudience = _configuration!.GetSection("JwtSettings").GetSection("Audience").Value,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration!.GetSection("JwtSettings").GetSection("SecretKey").Value!))
+                        ValidIssuer = _configuration!
+                            .GetSection("JwtSettings")
+                            .GetSection("Issuer")
+                            .Value,
+                        ValidAudience = _configuration!
+                            .GetSection("JwtSettings")
+                            .GetSection("Audience")
+                            .Value,
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            Encoding.UTF8.GetBytes(
+                                _configuration!
+                                    .GetSection("JwtSettings")
+                                    .GetSection("SecretKey")
+                                    .Value!
+                            )
+                        )
                     };
                 });
         }
