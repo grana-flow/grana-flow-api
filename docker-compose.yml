@@ -1,0 +1,63 @@
+services:
+    rabbitmq:
+        image: rabbitmq:4.0-management
+        container_name: rabbitmq
+        restart: always
+        ports:
+            - "5672:5672"
+            - "15672:15672"
+        environment:
+            RABBITMQ_USER: ${RABBITMQ_USER}
+            RABBITMQ_PWD: ${RABBITMQ_PWD}
+        networks:
+            - backend
+
+    postgres:
+        image: postgres:15
+        container_name: postgres_db
+        restart: always
+        environment:
+            POSTGRES_USER: ${POSTGRES_USER}
+            POSTGRES_PASSWORD: ${POSTGRES_PWD}
+            POSTGRES_DB: ${POSTGRES_DB}
+        ports:
+            - "5432:5432"
+        volumes:
+            - pgdata:/var/lib/postgresql/data
+        networks:
+            - backend
+
+    api:
+        image: leoof/grana-flow.api
+        container_name: grana-flow-api
+        build:
+            context: .
+            dockerfile: Dockerfile
+        depends_on:
+            - postgres
+            - rabbitmq
+        environment:
+            - ConnectionStrings__DefaultConnectionDb=Host=postgres;Username=${POSTGRES_USER};Port=${POSTGRES_PORT};Password=${POSTGRES_PWD};${Database}=${POSTGRES_DB}
+            - RabbitMQServer__HostName=${RABBITMQ_HOSTNAME}
+            - RabbitMQServer__Password=${RABBITMQ_PWD}
+            - RabbitMQServer__Username=${RABBITMQ_USER}
+            - RabbitMQServer__VirtualHost=${RABBITMQ_VIRTUALHOST}
+            - EmailService__Credentials__Username=${EMAILSERVICE_USERNAME}
+            - EmailService__Credentials__PasswordApp=${EMAILSERVICE_PASSWORDAPP}
+            - JwtSettings__Issuer=${JWTSETTINGS_ISSUER}
+            - JwtSettings__Audience=${JWTSETTINGS_AUDIENCE}
+            - JwtSettings__SecretKey=${JWTSETTINGS_SECRETKEY}
+            - JwtSettings__TokenExpirationMinutes=${JWTSETTINGS_TOKENEXPIRATIONINMINUTES}
+            - JwtSettings__RefreshToken__TokenExpirationInDays=${JWTSETTINGS_REFRESH_TOKENEXPIRATIONINDAYS}
+            - JwtSettings__RefreshToken__LoginProvaider=${JWTSETTINGS_REFRESH_LOGINPROVAIDER}
+            - JwtSettings__RefreshToken__Name=${JWTSETTINGS_REFRESH_NAME}
+            - JwtSettings__RefreshToken__SecretKey=${JWTSETTINGS_REFRESH_SECRETKEY}
+            - Web-Hosts__Url-ResetPassword=${WEBHOST_URL_RESETPWD}
+            - Web-Hosts__Url-ConfirmedEmail=${WEBHOST_URL_CONFIRMEMAIL}
+
+volumes:
+    pgdata:
+
+networks:
+    backend:
+        driver: bridge
